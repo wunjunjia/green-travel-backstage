@@ -1,38 +1,30 @@
 <template>
-  <div :class="classObj" class="app-wrapper">
-    <div v-if="device === 'mobile' && sidebar.opened" class="drawer-bg" @click="handleClickOutside"></div>
-    <sidebar class="sidebar-container"></sidebar>
-    <div class="main-container">
-      <div :class="{ 'fixed-header': fixedHeader }">
-        <navbar></navbar>
-      </div>
-      <app-main></app-main>
+  <div :class="classObj" class="layout-container">
+    <div v-if="device==='mobile' && sidebar.opened" class="drawer-bg" @click="handleClickOutside" />
+    <sidebar/>
+    <div class="main-container" :class="{ 'fixed-header': fixedHeader }">
+      <navbar />
+      <app-main />
     </div>
   </div>
 </template>
 
 <script>
-import { Navbar, Sidebar, AppMain } from './components';
+import { mapState } from 'vuex';
 import ResizeMixin from './mixin';
+import Sidebar from './components/Sidebar/index.vue';
+import Navbar from './components/Navbar.vue';
+import AppMain from './components/AppMain.vue';
 
 export default {
   name: 'Layout',
+  mixins: [ResizeMixin],
   components: {
-    Navbar,
     Sidebar,
+    Navbar,
     AppMain,
   },
-  mixins: [ResizeMixin],
   computed: {
-    sidebar() {
-      return this.$store.state.app.sidebar;
-    },
-    device() {
-      return this.$store.state.app.device;
-    },
-    fixedHeader() {
-      return this.$store.state.settings.fixedHeader;
-    },
     classObj() {
       return {
         hideSidebar: !this.sidebar.opened,
@@ -41,50 +33,18 @@ export default {
         mobile: this.device === 'mobile',
       };
     },
+    ...mapState('app', {
+      sidebar: state => state.sidebar,
+      device: state => state.device,
+    }),
+    ...mapState('settings', {
+      fixedHeader: state => state.fixedHeader,
+    }),
   },
   methods: {
     handleClickOutside() {
-      this.$store.dispath('app/closeSideBar', { withoutAnimation: false });
+      this.$store.dispatch('app/closeSideBar', { withoutAnimation: false });
     },
   },
 };
 </script>
-
-<style scoped lang="scss">
-@import "~@/styles/mixin.scss";
-@import "~@/styles/variables.scss";
-
-.app-wrapper {
-  @include clearfix;
-  position: relative;
-  height: 100%;
-  width: 100%;
-  &.mobile.openSidebar {
-    position: fixed;
-    top: 0;
-  }
-}
-.drawer-bg {
-  background: #000;
-  opacity: .3;
-  width: 100%;
-  top: 0;
-  height: 100%;
-  position: absolute;
-  z-index: 999;
-}
-.fixed-header {
-  position: fixed;
-  top: 0;
-  right: 0;
-  z-index: 9;
-  width: calc(100% - #{$sideBarWidth});
-  transition: width .28s;
-}
-.hideSidebar .fixed-header {
-  width: calc(100% - 54px);
-}
-.mobile .fixed-header {
-  width: 100%;
-}
-</style>

@@ -7,6 +7,8 @@ import router from './router';
 import store from './store';
 import '@/assets/scss/index.scss';
 import '@/assets/font/iconfont.css';
+import './config/axios-config';
+import './permission';
 
 Vue.use(ElementUI);
 

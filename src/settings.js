@@ -1,5 +1,5 @@
 module.exports = {
   title: 'Green Travel BackStage',
-  fixedHeader: false,
-  sidebarLogo: false,
+  fixedHeader: true,
+  sidebarLogo: true,
 };

@@ -1,0 +1,160 @@
+.layout-container {
+  position: relative;
+  height: 100%;
+  width: 100%;
+
+  &.hideSidebar {
+    .main-container {
+      margin-left: px2rem($collapseSideBarWidth);
+
+      &.fixed-header {
+        .navbar {
+          left: px2rem($collapseSideBarWidth);
+        }
+      }
+    }
+
+    .sidebar-container {
+      width: px2rem($collapseSideBarWidth);
+    }
+  }
+
+  &.mobile {
+    .main-container {
+      margin-left: 0;
+
+      &.fixed-header {
+        .navbar {
+          left: 0;
+        }
+      }
+    }
+
+    .sidebar-container {
+      transition: transform .28s;
+      width: px2rem($openSideBarWidth);
+    }
+
+    &.hideSidebar {
+      .sidebar-container {
+        pointer-events: none;
+        transition-duration: 0.3s;
+        transform: translate3d(px2rem(-$openSideBarWidth), 0, 0);
+      }
+    }
+  }
+
+  &.withoutAnimation {
+    .main-container,
+    .sidebar-container,
+    .navbar {
+      transition: none;
+    }
+  }
+
+  .drawer-bg {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #000;
+    opacity: 0.3;
+    z-index: 99;
+  }
+
+  .main-container {
+    min-height: 100%;
+    transition: margin-left .28s;
+    margin-left: px2rem($openSideBarWidth);
+
+    .app-main {
+      box-sizing: border-box;
+      width: 100%;
+      min-height: 100vh;
+      background-color: #f8f8f8;
+    }
+
+    &.fixed-header {
+
+      .app-main {
+        padding-top: px2rem($navbarHeight);
+      }
+
+      .navbar {
+        position: fixed;
+        top: 0;
+        right: 0;
+        left: px2rem($openSideBarWidth);
+      }
+    }
+  }
+  
+  .sidebar-container {
+    box-sizing: border-box;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: px2rem($openSideBarWidth);
+    transition: width 0.28s;
+    background-color: $menuBg;
+    z-index: 999;
+    overflow: hidden;
+    
+    &.sidebar-logo {
+      .scrollbar {
+        padding-top: px2rem(50);
+      }
+    }
+  
+    .scrollbar {
+      height: 100%;
+    }
+  
+    .el-scrollbar {
+  
+      .el-scrollbar__bar.is-vertical {
+        right: 0;
+      }
+  
+      .el-scrollbar__bar.is-horizontal {
+        display: none;
+      }
+  
+      .el-scrollbar__wrap {
+        overflow-x: hidden !important;
+      }
+    }
+  
+    .el-menu {
+      width: 100%;
+      border: none;
+  
+      // 展开时子菜单拥有的类
+      &.el-menu--inline {
+        .el-menu-item {
+          background-color: $subMenuBg !important;
+  
+          &:hover {
+            background-color: $subMenuHover !important;
+          }
+        }
+      }
+  
+      // 闭合时拥有的类
+      &.el-menu--collapse {
+        span {
+          height: 0;
+          width: 0;
+          overflow: hidden;
+          visibility: hidden;
+          display: inline-block;
+        }
+  
+        .el-submenu__icon-arrow {
+          display: none;
+        }
+      }
+    }
+  }
+}

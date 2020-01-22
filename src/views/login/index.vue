@@ -13,18 +13,33 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
 import { ParticleAnimation } from '@/lib';
 
 export default {
   name: 'Login',
+  data() {
+    return {
+      particleAnimation: null,
+    };
+  },
+  computed: {
+    ...mapState('user', {
+      user: state => state.data,
+    }),
+  },
   mounted() {
+    if (this.user) {
+      this.$router.replace('/');
+      return;
+    }
     this.particleAnimation = new ParticleAnimation({
       el: document.querySelector('.particle-animation'),
       shape: 'heart',
     });
   },
   beforeDestroy() {
-    this.particleAnimation.destroy();
+    if (this.particleAnimation) this.particleAnimation.destroy();
   },
 };
 </script>
@@ -32,6 +47,8 @@ export default {
 <style lang="scss" scoped>
   .root {
     position: relative;
+    width: 100%;
+    height: 100%;
   }
 
   .particle-animation-container {
