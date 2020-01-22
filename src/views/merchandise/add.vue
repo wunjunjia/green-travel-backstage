@@ -132,8 +132,7 @@ export default {
       this.path = res;
       this.imageUrl = URL.createObjectURL(file.raw);
     },
-    error(err) {
-      console.log(err);
+    error() {
       this.$message.error('图片上传失败！');
     },
     load() {
