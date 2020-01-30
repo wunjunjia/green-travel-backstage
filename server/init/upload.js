@@ -1,5 +1,5 @@
 const multer = require('multer');
-const { uploadFilename, uploadDirname } = require('../utils');
+const { uploadFilename, uploadDirname } = require('../utils/upload');
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -12,7 +12,7 @@ const storage = multer.diskStorage({
 const upload = multer({
   storage,
   limits: {
-    fileSize: 1024 * 10 * 5,
+    fileSize: 1024 * 1024 * 5, // 5MB
   },
 });
 
