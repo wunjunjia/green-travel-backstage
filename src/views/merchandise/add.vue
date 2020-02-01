@@ -46,10 +46,13 @@ export default {
 
 <style lang="scss" scoped>
   .merchandise-add-container {
-    padding: px2rem(10);
+    box-sizing: border-box;
+    width: 80%;
+    padding: 20px;
 
-    @media screen and (min-width: 750px){
-      width: 80%;
+    @media screen and (max-width: $dividingLine){
+      width: 100%;
+      padding: px2rem(10);
     }
   }
 </style>

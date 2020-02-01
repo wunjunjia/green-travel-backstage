@@ -32,54 +32,71 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.sidebarLogoFade-enter-active {
-  transition: opacity 1.5s;
-}
+  .sidebarLogoFade-enter-active {
+    transition: opacity 1.5s;
+  }
 
-.sidebarLogoFade-enter,
-.sidebarLogoFade-leave-to {
-  opacity: 0;
-}
+  .sidebarLogoFade-enter,
+  .sidebarLogoFade-leave-to {
+    opacity: 0;
+  }
 
-.sidebar-logo-container {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: px2rem(50);
-  line-height: px2rem(50);
-  background: #2b2f3a;
-  text-align: center;
-  overflow: hidden;
-
-  & .sidebar-logo-link {
-    display: inline-block;
-    height: 100%;
+  .sidebar-logo-container {
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
+    height: 50px;
+    line-height: 50px;
+    background-color: $sidebarLogoBg;
+    text-align: center;
+    overflow: hidden;
 
-    & .sidebar-logo {
-      width: 32px;
-      height: 32px;
-      vertical-align: middle;
-      margin-right: 12px;
+    .sidebar-logo-link {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100%;
+      width: 100%;
+
+      .sidebar-logo {
+        width: 32px;
+        height: 32px;
+        margin-right: 12px;
+      }
+
+      .sidebar-title {
+        color: #fff;
+        font-weight: 600;
+        font-size: 14px;
+        font-family: Avenir, Helvetica Neue, Arial, Helvetica, sans-serif;
+      }
     }
 
-    & .sidebar-title {
-      display: inline-block;
-      margin: 0;
-      color: #fff;
-      font-weight: 600;
-      line-height: 50px;
-      font-size: 14px;
-      font-family: Avenir, Helvetica Neue, Arial, Helvetica, sans-serif;
-      vertical-align: middle;
+    &.collapse {
+      .sidebar-logo {
+        margin-right: 0;
+      }
     }
   }
 
-  &.collapse {
-    .sidebar-logo {
-      margin-right: 0px;
+  @media screen and (max-width: $dividingLine) {
+    .sidebar-logo-container {
+      height: px2rem(50);
+      line-height: px2rem(50);
+
+      .sidebar-logo-link {
+
+        .sidebar-logo {
+          width: px2rem(32);
+          height: px2rem(32);
+          margin-right: px2rem(12);
+        }
+
+        .sidebar-title {
+          font-size: px2rem(14);
+        }
+      }
     }
   }
-}
 </style>

@@ -1,6 +1,6 @@
 <template>
   <div :class="classObj" class="layout-container">
-    <div v-if="device==='mobile' && sidebar.opened" class="drawer-bg" @click="handleClickOutside" />
+    <div v-if="device==='mobile' && sidebar.opened" class="drawer-bg" @click="toggleSideBar" />
     <sidebar/>
     <div class="main-container" :class="{ 'fixed-header': fixedHeader }">
       <navbar />
@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
+import { mapState, mapActions } from 'vuex';
 import ResizeMixin from './mixin';
 import Sidebar from './components/Sidebar/index.vue';
 import Navbar from './components/Navbar.vue';
@@ -28,7 +28,6 @@ export default {
     classObj() {
       return {
         hideSidebar: !this.sidebar.opened,
-        openSidebar: this.sidebar.opened,
         withoutAnimation: this.sidebar.withoutAnimation,
         mobile: this.device === 'mobile',
       };
@@ -42,9 +41,7 @@ export default {
     }),
   },
   methods: {
-    handleClickOutside() {
-      this.$store.dispatch('app/closeSideBar', { withoutAnimation: false });
-    },
+    ...mapActions('app', ['toggleSideBar']),
   },
 };
 </script>

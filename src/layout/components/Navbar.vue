@@ -73,17 +73,17 @@ export default {
   .navbar {
     display: flex;
     align-items: center;
-    height: px2rem(50);
+    height: #{$navbarHeight}px;
     background-color: #fff;
     box-shadow: 0 1px 4px rgba(0,21,41,.08);
     transition: left 0.28s;
 
     .hamburger-container {
-      width: px2rem(50);
-      height: px2rem(50);
+      width: 50px;
+      height: 100%;
       text-align: center;
-      line-height: px2rem(50);
-      font-size: px2rem(22);
+      line-height: 50px;
+      font-size: 22px;
       color: #222;
       transition: background-color .3s;
 
@@ -95,9 +95,8 @@ export default {
 
     .breadcrumb-container {
       flex: 1;
-      font-size: px2rem(14);
-      line-height: px2rem(50);
-      margin-left: px2rem(8);
+      font-size: 16px;
+      margin-left: 8px;
 
       span {
         color: #97a8be;
@@ -105,10 +104,37 @@ export default {
     }
 
     .avatar {
-      height: px2rem(40);
-      width: px2rem(40);
-      margin-right: px2rem(4);
-      border-radius: px2rem(5);
+      display: inline-block;
+      height: 40px;
+      width: 40px;
+      margin-right: 4px;
+      border-radius: 5px;
+    }
+  }
+
+  @media screen and (max-width: $dividingLine) {
+    .navbar {
+      height: px2rem(50);
+
+      .hamburger-container {
+        width: px2rem(50);
+        height: px2rem(50);
+        line-height: px2rem(50);
+        font-size: px2rem(22);
+      }
+
+      .breadcrumb-container {
+        font-size: px2rem(14);
+        margin-left: px2rem(8);
+      }
+
+      .avatar {
+        display: inline-block;
+        height: px2rem(40);
+        width: px2rem(40);
+        margin-right: px2rem(4);
+        border-radius: px2rem(5);
+      }
     }
   }
 </style>

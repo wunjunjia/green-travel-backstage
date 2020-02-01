@@ -2,45 +2,17 @@
   position: relative;
   height: 100%;
   width: 100%;
-
   &.hideSidebar {
     .main-container {
-      margin-left: px2rem($collapseSideBarWidth);
-
+      margin-left: #{$collapseSideBarWidth}px;
       &.fixed-header {
         .navbar {
-          left: px2rem($collapseSideBarWidth);
+          left: #{$collapseSideBarWidth}px;
         }
       }
     }
-
     .sidebar-container {
-      width: px2rem($collapseSideBarWidth);
-    }
-  }
-
-  &.mobile {
-    .main-container {
-      margin-left: 0;
-
-      &.fixed-header {
-        .navbar {
-          left: 0;
-        }
-      }
-    }
-
-    .sidebar-container {
-      transition: transform .28s;
-      width: px2rem($openSideBarWidth);
-    }
-
-    &.hideSidebar {
-      .sidebar-container {
-        pointer-events: none;
-        transition-duration: 0.3s;
-        transform: translate3d(px2rem(-$openSideBarWidth), 0, 0);
-      }
+      width: #{$collapseSideBarWidth}px;
     }
   }
 
@@ -55,6 +27,7 @@
   .drawer-bg {
     position: absolute;
     top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
     background-color: #000;
@@ -65,27 +38,26 @@
   .main-container {
     height: 100%;
     transition: margin-left .28s;
-    margin-left: px2rem($openSideBarWidth);
+    margin-left: #{$openSideBarWidth}px;
 
     .app-main {
-      position: relative;
       box-sizing: border-box;
       width: 100%;
       height: 100%;
-      background-color: #f8f8f8;
+      background-color: $appMainBg;
     }
 
     &.fixed-header {
-
+      
       .app-main {
-        padding-top: px2rem($navbarHeight);
+        padding-top: #{$navbarHeight}px;
       }
 
       .navbar {
         position: fixed;
         top: 0;
         right: 0;
-        left: px2rem($openSideBarWidth);
+        left: #{$openSideBarWidth}px;
         z-index: 9;
       }
     }
@@ -97,19 +69,20 @@
     top: 0;
     bottom: 0;
     left: 0;
-    width: px2rem($openSideBarWidth);
-    transition: width 0.28s;
+    width: #{$openSideBarWidth}px;
     background-color: $menuBg;
+    transition: width 0.28s;
     z-index: 999;
     overflow: hidden;
     
     &.sidebar-logo {
       .scrollbar {
-        padding-top: px2rem(50);
+        padding-top: #{$sidebarLogoHeight}px;
       }
     }
   
     .scrollbar {
+      box-sizing: border-box;
       height: 100%;
     }
   
@@ -131,9 +104,23 @@
     .el-menu {
       width: 100%;
       border: none;
-  
+
+      .el-menu-item.is-active, .el-submenu.is-active .el-submenu__title {
+
+        i, span {
+          color: $menuActiveText;
+        }
+      }
+
+      i {
+        color: $menuText;
+        font-size: px2rem(16);
+        margin-right: px2rem(10);
+      }
+
       // 展开时子菜单拥有的类
       &.el-menu--inline {
+
         .el-menu-item {
           background-color: $subMenuBg !important;
   
@@ -145,6 +132,15 @@
   
       // 闭合时拥有的类
       &.el-menu--collapse {
+
+        .el-submenu__title, .el-tooltip {
+          text-align: center;
+        }
+        
+        i {
+          margin-right: 0;
+        }
+
         span {
           height: 0;
           width: 0;
@@ -155,6 +151,44 @@
   
         .el-submenu__icon-arrow {
           display: none;
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: $dividingLine) {
+  .layout-container {
+    &.hideSidebar {
+      .main-container {
+        margin-left: 0;
+        &.fixed-header {
+          .navbar {
+            left: 0;
+          }
+        }
+      }
+      .sidebar-container {
+        transform: translate3d(px2rem(-$openSideBarWidth), 0, 0);
+      }
+    }
+    .sidebar-container {
+      width: px2rem($openSideBarWidth);
+      transition: transform .28s;
+      &.sidebar-logo {
+        .scrollbar {
+          padding-top: px2rem(50);
+        }
+      }
+    }
+    .main-container {
+      margin-left: 0;
+      &.fixed-header {
+        .app-main {
+          padding-top: px2rem($navbarHeight);
+        }
+        .navbar {
+          left: 0;
         }
       }
     }

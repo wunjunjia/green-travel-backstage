@@ -11,6 +11,7 @@
         :collapse="!opened"
         :background-color="variables.menuBg"
         :text-color="variables.menuText"
+        :active-text-color="variables.menuActiveText"
         :unique-opened="false"
         :collapse-transition="false"
         :router="true"

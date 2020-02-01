@@ -2,7 +2,7 @@
   <div>
     <el-submenu v-if="item.children" :index="item.path" >
       <template slot="title">
-        <i v-if="item.icon" :class="`el-icon-${item.icon}`"></i>
+        <i v-if="item.icon" class="iconfont" :class="item.icon"></i>
         <span slot="title">{{ item.name }}</span>
       </template>
       <sidebar-item
@@ -12,7 +12,7 @@
       />
     </el-submenu>
     <el-menu-item v-else :index="item.path">
-      <i v-if="item.icon" :class="`el-icon-${item.icon}`"></i>
+      <i v-if="item.icon" class="iconfont" :class="item.icon"></i>
       <span slot="title">{{ item.name }}</span>
     </el-menu-item>
   </div>

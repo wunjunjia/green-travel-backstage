@@ -32,6 +32,7 @@
           :before-upload="beforeUpload"
           :on-success="success"
           :on-error="error"
+          :accept="accept"
         >
           <img v-if="imageUrl" :src="imageUrl" class="avatar" @load="load">
           <div v-else class="upload-container">
@@ -48,10 +49,11 @@
 
 <script>
 import formMixin from '@/mixins/form';
+import uploadMixin from '@/mixins/upload';
 
 export default {
   name: 'MerchandiseForm',
-  mixins: [formMixin],
+  mixins: [formMixin, uploadMixin],
   props: {
     id: {
       type: Number,
@@ -69,7 +71,7 @@ export default {
       type: String,
       default: '',
     },
-    oldPath: {
+    path: {
       type: String,
       default: '',
     },
@@ -102,48 +104,41 @@ export default {
         ],
       },
       loading: false,
-      imageUrl: '',
-      whiteList: ['image/jpeg', 'image/jpg', 'image/png', 'image/gif'],
-      size: 1024 * 1024 * 5,
-      path: '',
+      maxUploadCount: 1,
     };
   },
   watch: {
     id() {
+      this.init();
+    },
+  },
+  computed: {
+    imageUrl() {
+      return this.fileList[0].imageUrl;
+    },
+  },
+  created() {
+    this.init();
+  },
+  methods: {
+    init() {
+      if (this.id === -1) {
+        this.fileList = [{ imageUrl: '', path: '' }];
+        return;
+      }
       this.formData.name = this.name;
       this.formData.description = this.description;
       this.formData.integral = this.integral;
-      this.path = this.oldPath;
-      this.imageUrl = this.oldPath;
-    },
-  },
-  methods: {
-    beforeUpload(file) {
-      if (this.whiteList.indexOf(file.type) === -1) {
-        this.$message.error('上传头像图片只能是 JPG 格式!');
-        return false;
-      }
-      if (file.size > this.size) {
-        this.$message.error('上传头像图片大小不能超过 5MB!');
-        return false;
-      }
-      return true;
-    },
-    success(res, file) {
-      this.path = res;
-      this.imageUrl = URL.createObjectURL(file.raw);
-    },
-    error() {
-      this.$message.error('图片上传失败！');
-    },
-    load() {
-      URL.revokeObjectURL(this.imageUrl);
+      this.fileList = [{
+        path: this.path,
+        imageUrl: this.path,
+      }];
     },
     cancel() {
       this.loading = false;
     },
     submit() {
-      if (this.path === '') {
+      if (this.fileList[0].path === '') {
         this.$message.error('请选择一张图片！');
         return;
       }
@@ -154,14 +149,13 @@ export default {
           name: this.formData.name,
           description: this.formData.description,
           integral: parseFloat(this.formData.integral),
-          path: this.path,
+          path: this.fileList[0].path,
         });
       });
     },
     reset() {
-      this.imageUrl = '';
-      this.path = '';
-      this.$refs.form.resetFields();
+      this.init();
+      if (this.id === -1) this.$refs.form.resetFields();
     },
   },
 };
@@ -170,13 +164,13 @@ export default {
 <style lang="scss" scoped>
   .upload-container {
     position: relative;
-    width: px2rem(148);
-    height: px2rem(148);
+    width: 180px;
+    height: 180px;
     border: 1px dashed #d9d9d9;
-    border-radius: px2rem(6);
-    font-size: px2rem(28);
+    border-radius: 6px;
+    font-size: 26px;
     color: #8c939d;
-    line-height: px2rem(148);
+    line-height: 180px;
     text-align: center;
     cursor: pointer;
     overflow: hidden;
@@ -189,9 +183,26 @@ export default {
   }
 
   .avatar {
-    display: block;
-    width: px2rem(148);
-    height: px2rem(148);
-    border-radius: px2rem(6);
+    width: 180px;
+    height: 180px;
+    border-radius: 6px;
+  }
+</style>
+
+<style lang="scss" scoped>
+  @media screen and (max-width: $dividingLine) {
+    .upload-container {
+      width: px2rem(148);
+      height: px2rem(148);
+      border-radius: px2rem(6);
+      font-size: px2rem(28);
+      line-height: px2rem(148);
+    }
+
+    .avatar {
+      width: px2rem(148);
+      height: px2rem(148);
+      border-radius: px2rem(6);
+    }
   }
 </style>

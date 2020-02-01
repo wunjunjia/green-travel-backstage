@@ -1,27 +1,26 @@
 <template>
-  <div class="merchandise-edit-container">
-    <div class="wrapper">
-      <span class="close" @click="close">
+  <custom-mask>
+    <div class="merchandise-edit-container">
+      <span class="icon" @click="close">
         <i class="el-icon-close"></i>
       </span>
-      <div class="content">
-        <merchandise-form
-          ref="form"
-          :id="target.id"
-          :name="target.name"
-          :description="target.description"
-          :integral="String(target.integral)"
-          :oldPath="target.path"
-          @submit="submit"
-        />
-      </div>
+      <merchandise-form
+        ref="form"
+        :id="target.id"
+        :name="target.name"
+        :description="target.description"
+        :integral="String(target.integral)"
+        :path="target.path"
+        @submit="submit"
+      />
     </div>
-  </div>
+  </custom-mask>
 </template>
 
 <script>
 import axios from 'axios';
 import MerchandiseForm from './form.vue';
+import CustomMask from '@/components/CustomMask/index.vue';
 
 export default {
   name: 'MerchandiseEdit',
@@ -37,6 +36,7 @@ export default {
   },
   components: {
     MerchandiseForm,
+    CustomMask,
   },
   methods: {
     submit(payload) {
@@ -72,33 +72,37 @@ export default {
 
 <style lang="scss" scoped>
   .merchandise-edit-container {
-    @include mask;
+    box-sizing: border-box;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 500px;
+    padding: 40px 10px 0 10px;
+    transform: translate(-50%, -50%);
+    border-radius: 4px;
+    background-color: #fff;
 
-    .wrapper {
+    .icon {
       position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
+      right: 10px;
+      top: 10px;
+      font-size: 22px;
+      color: #606266;
+    }
+  }
+</style>
+
+<style lang="scss" scoped>
+  @media screen and (max-width: $dividingLine) {
+    .merchandise-edit-container {
       width: 90%;
-      padding-top: px2rem(40);
+      padding: px2rem(40) px2rem(10) 0 px2rem(10);
       border-radius: px2rem(4);
-      background-color: #fff;
 
-      @media screen and (min-width: 750px) {
-        width: 50%;
-      }
-
-      .close {
-        position: absolute;
+      .icon {
         right: px2rem(10);
         top: px2rem(10);
         font-size: px2rem(22);
-        color: #606266;
-        @include expand;
-      }
-
-      .content {
-        width: 96%;
       }
     }
   }

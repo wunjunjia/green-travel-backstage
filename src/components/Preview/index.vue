@@ -1,31 +1,46 @@
 <template>
   <div class="preview-container">
-    <img @load="load" :src="src" alt="picture">
-    <span class="status">
-      <i class="el-icon-check"></i>
-    </span>
-    <div class="operate-container" @click.prevent="preview">
-      <i class="el-icon-zoom-in"></i>
+    <slot />
+    <div class="operation-container">
+      <span class="icon" @click="toggle">
+        <i class="el-icon-zoom-in"></i>
+      </span>
     </div>
+    <transition name="fade">
+      <custom-mask v-show="preview">
+        <div class="mask-content">
+          <span class="icon" @click="toggle">
+            <i class="el-icon-close"></i>
+          </span>
+          <img :src="path">
+        </div>
+      </custom-mask>
+    </transition>
   </div>
 </template>
 
 <script>
+import CustomMask from '@/components/CustomMask/index.vue';
+
 export default {
   name: 'Preview',
   props: {
-    src: {
+    path: {
       type: String,
       default: '',
     },
   },
+  data() {
+    return {
+      preview: false,
+    };
+  },
+  components: {
+    CustomMask,
+  },
   methods: {
-    load() {
-      if (this.src !== '') window.URL.revokeObjectURL(this.src);
-    },
-    preview() {
-      this.show = !this.show;
-      this.$emit('preview');
+    toggle() {
+      this.preview = !this.preview;
     },
   },
 };
@@ -34,61 +49,68 @@ export default {
 <style lang="scss" scoped>
   .preview-container {
     position: relative;
-    width: px2rem(148);
-    height: px2rem(148);
-    overflow: hidden;
-    color: #fff;
+    display: block;
+    height: 100%;
 
-    >img {
-      display: inline-block;
-      width: 100%;
-      height: 100%;
-      border-radius: px2rem(6);
-      cursor: pointer;
-    }
-
-    .status {
-      display: flex;
-      justify-content: center;
-      align-items: flex-end;
-      position: absolute;
-      width: px2rem(40);
-      height: px2rem(24);
-      right: px2rem(-15);
-      top: px2rem(-6);
-      background-color: #13ce66;
-      text-align: center;
-      transform: rotate(45deg);
-      box-shadow: 0 0 1pc 1px rgba(0,0,0,.2);
-
-      i {
-        font-size: px2rem(12);
-        font-weight: 700;
-        transform: rotate(-45deg);
-      }
-    }
-
-    .operate-container {
-      opacity: 0;
+    .operation-container {
       position: absolute;
       top: 0;
       left: 0;
-      right: 0;
-      bottom: 0;
-      line-height: px2rem(148);
-      text-align: center;
-      border-radius: px2rem(6);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
       background-color: rgba(0,0,0,.5);
       transition: opacity .3s;
-
-      i {
-        font-size: px2rem(22);
-      }
+      color: #fff;
+      font-size: 22px;
     }
 
     &:hover {
-      .operate-container {
+      .operation-container {
         opacity: 1;
+      }
+    }
+
+    .mask-content {
+      box-sizing: border-box;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 500px;
+      padding: 40px 20px 20px 20px;
+      background-color: #fff;
+      transform: translate(-50%, -50%);
+
+      .icon {
+        position: absolute;
+        top: 10px;
+        right: 20px;
+        color: #909399;
+        font-size: 22px;
+      }
+    }
+  }
+</style>
+
+<style lang="scss" scoped>
+  @media screen and (max-width: $dividingLine) {
+    .preview-container {
+      .operation-container {
+        font-size: px2rem(18);
+      }
+
+      .mask-content {
+        width: 90%;
+        padding: px2rem(40) px2rem(10) px2rem(10) px2rem(10);
+
+        .icon {
+          top: px2rem(10);
+          right: px2rem(10);
+          font-size: px2rem(22);
+        }
       }
     }
   }

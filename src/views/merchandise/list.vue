@@ -63,9 +63,11 @@
       </el-table-column>
       <el-table-column label="图片">
         <template slot-scope="scope">
-          <preview :path="scope.row.path">
-            <img class="avatar" :src="scope.row.path" alt="avatar">
-          </preview>
+          <div style="display: flex">
+            <preview :path="scope.row.path">
+              <img class="avatar" :src="scope.row.path" alt="avatar">
+            </preview>
+          </div>
         </template>
       </el-table-column>
       <el-table-column label="操作" width="200px">
@@ -105,7 +107,7 @@
     <el-dialog
       :visible="visible"
       :show-close="false"
-      width="60%"
+      width="320px"
       center>
       <p class="dialog-title">确定删除?</p>
       <span slot="footer">
@@ -124,7 +126,7 @@ import MerchandiseEdit from './edit.vue';
 import MerchandiseSearch from './search.vue';
 import MerchandiseSingleDelete from './singleDelete.vue';
 import MerchandiseBatchDelete from './batchDelete.vue';
-import Preview from './preview.vue';
+import Preview from '@/components/Preview/index.vue';
 import cache from '@/caches/merchandise';
 
 export default {
@@ -140,7 +142,7 @@ export default {
       },
       merchandiseList: [],
       currentPage: 1,
-      pageSize: 2,
+      pageSize: 6,
       total: 0,
       ids: [],
       handler: () => {},
@@ -167,7 +169,7 @@ export default {
     MerchandiseSearch,
     MerchandiseSingleDelete,
     MerchandiseBatchDelete,
-    Preview,  /* eslint-disable-line */
+    Preview,
   },
   methods: {
     integralFormatter(row) {
@@ -299,8 +301,8 @@ export default {
 
 <style lang="scss" scoped>
   .merchandise-list-container {
-    padding: px2rem(10);
-    background-color: #f8f8f8;
+    padding: 20px;
+    background-color: $appMainBg;
 
     .multipart-line {
       width: 100%;
@@ -315,54 +317,78 @@ export default {
       justify-content: space-between;
       align-items: center;
       flex-wrap: wrap;
-      margin-bottom: px2rem(10);
+      margin-bottom: 10px;
     }
 
     .avatar {
-      display: block;
-      width: px2rem(48);
-      height: px2rem(48);
-    }
-
-    .pagination-container {
-      position: fixed;
-      left: px2rem($openSideBarWidth);
-      bottom: px2rem(20);
-      width: calc(100% - #{px2rem($openSideBarWidth)});
-      text-align: center;
-      transition: all .28s;
-    }
-
-    .form {
-      .el-form-item {
-        margin-bottom: px2rem(4);
-      }
+      width: 56px;
+      height: 56px;
     }
 
     .dialog-title {
       margin: 0;
       color: #333;
-      font-size: px2rem(14);
+      font-size: 14px;
       text-align: center;
+    }
+
+    .el-form-item {
+      margin-bottom: px2rem(4);
+    }
+
+    .pagination-container {
+      position: fixed;
+      left: #{$openSideBarWidth}px;
+      bottom: 20px;
+      width: calc(100% - #{$openSideBarWidth}px);
+      text-align: center;
+      transition: all .28s;
     }
 
     &.hideSidebar {
       .pagination-container {
-        left: px2rem($collapseSideBarWidth);
-        width: calc(100% - #{px2rem($collapseSideBarWidth)});
-      }
-    }
-
-    &.mobile {
-      .pagination-container {
-        left: 0;
-        width: 100%;
+        left: #{$collapseSideBarWidth}px;
+        width: calc(100% - #{$collapseSideBarWidth}px);
       }
     }
 
     &.withoutAnimation {
       .pagination-container {
         transition: none;
+      }
+    }
+  }
+</style>
+
+<style lang="scss" scoped>
+  @media screen and (max-width: $dividingLine) {
+    .merchandise-list-container {
+      padding: px2rem(10);
+
+      .header {
+        margin-bottom: px2rem(10);
+      }
+
+      .avatar {
+        width: px2rem(56);
+        height: px2rem(56);
+      }
+
+      .dialog-title {
+        font-size: px2rem(14);
+      }
+
+      .pagination-container {
+        left: 0;
+        bottom: px2rem(20);
+        width: 100%;
+      }
+
+      &.hideSidebar {
+        .pagination-container {
+          left: 0;
+          width: 100%;
+        }
       }
     }
   }

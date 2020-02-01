@@ -14,7 +14,7 @@ const routes = [
       {
         path: 'dashboard',
         name: 'Dashboard',
-        icon: 's-home',
+        icon: 'icon-homepageselected',
         component: () => import('@/views/dashboard/index.vue'),
         meta: { title: 'Dashboard' },
       },
@@ -31,7 +31,7 @@ const routes = [
   {
     path: '/merchandise',
     name: '商品管理',
-    icon: 's-goods',
+    icon: 'icon-shangpingouwudai2',
     component: Layout,
     redirect: '/merchandise/add',
     children: [
@@ -46,6 +46,21 @@ const routes = [
         name: '商品列表',
         component: () => import('@/views/merchandise/list.vue'),
         meta: { title: '商品列表' },
+      },
+    ],
+  },
+  {
+    path: '/advertisement',
+    name: '广告管理',
+    icon: 'icon-ico_AD',
+    component: Layout,
+    redirect: '/advertisement/add',
+    children: [
+      {
+        path: 'add',
+        name: '新增广告',
+        component: () => import('@/views/advertisement/add.vue'),
+        meta: { title: '新增广告' },
       },
     ],
   },

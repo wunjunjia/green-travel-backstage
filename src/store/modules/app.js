@@ -9,14 +9,11 @@ const state = {
 };
 
 const mutations = {
-  TOGGLE_SIDEBAR: (state) => {
+  TOGGLE_SIDEBAR: (state, withoutAnimation) => {
     state.sidebar.opened = !state.sidebar.opened;
-    state.sidebar.withoutAnimation = false;
-    if (state.sidebar.opened) {
-      Cookies.set('sidebarStatus', 1);
-    } else {
-      Cookies.set('sidebarStatus', 0);
-    }
+    state.sidebar.withoutAnimation = withoutAnimation;
+    if (state.sidebar.opened) Cookies.set('sidebarStatus', 1);
+    else Cookies.set('sidebarStatus', 0);
   },
   CLOSE_SIDEBAR: (state, withoutAnimation) => {
     Cookies.set('sidebarStatus', 0);
@@ -25,12 +22,13 @@ const mutations = {
   },
   TOGGLE_DEVICE: (state, device) => {
     state.device = device;
+    state.sidebar.withoutAnimation = true;
   },
 };
 
 const actions = {
-  toggleSideBar({ commit }) {
-    commit('TOGGLE_SIDEBAR');
+  toggleSideBar({ commit }, { withoutAnimation = false } = {}) {
+    commit('TOGGLE_SIDEBAR', withoutAnimation);
   },
   closeSideBar({ commit }, { withoutAnimation }) {
     commit('CLOSE_SIDEBAR', withoutAnimation);
