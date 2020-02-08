@@ -1,55 +1,59 @@
 <template>
   <el-form
-      :model="formData"
-      :rules="rules"
-      ref="form"
-      label-width="100px"
-      status-icon
-    >
-      <el-form-item label="商品名称" prop="name">
-        <el-input v-model="formData.name" @blur="trim('name')"></el-input>
-      </el-form-item>
-      <el-form-item label="碳积分" prop="integral" @blur="trim('integral')">
-        <el-input v-model="formData.integral"></el-input>
-      </el-form-item>
-      <el-form-item label="商品描述" prop="description">
-        <el-input
-          type="textarea"
-          v-model="formData.description"
-          clearable
-          maxlength="300"
-          show-word-limit
-          resize="none"
-          rows="5"
-          @blur="trim('description')"
-        ></el-input>
-      </el-form-item>
-      <el-form-item label="图片">
-        <el-upload
-          action="/api/upload/merchandise"
-          name="merchandise"
-          :show-file-list="false"
-          :before-upload="beforeUpload"
-          :on-success="success"
-          :on-error="error"
-          :accept="accept"
-        >
-          <img v-if="imageUrl" :src="imageUrl" class="avatar" @load="load">
-          <div v-else class="upload-container">
-            <i class="el-icon-plus"></i>
-          </div>
-        </el-upload>
-      </el-form-item>
-       <el-form-item>
-        <el-button type="primary" :loading="loading" @click="submit">提交</el-button>
-        <el-button @click="reset">重置</el-button>
-      </el-form-item>
-    </el-form>
+    :model="formData"
+    :rules="rules"
+    ref="form"
+    label-width="100px"
+    status-icon
+  >
+    <el-form-item label="商品名称" prop="name">
+      <el-input v-model="formData.name" @blur="trim('name')"></el-input>
+    </el-form-item>
+    <el-form-item label="碳积分" prop="integral" @blur="trim('integral')">
+      <el-input v-model="formData.integral"></el-input>
+    </el-form-item>
+    <el-form-item label="商品描述" prop="description">
+      <el-input
+        type="textarea"
+        v-model="formData.description"
+        clearable
+        maxlength="300"
+        show-word-limit
+        resize="none"
+        rows="5"
+        @blur="trim('description')"
+      ></el-input>
+    </el-form-item>
+    <el-form-item label="图片" required>
+      <el-upload
+        action="/api/upload/merchandise"
+        name="merchandise"
+        :show-file-list="false"
+        :before-upload="beforeUpload"
+        :on-success="success"
+        :on-error="error"
+        :accept="accept"
+        class="upload-container"
+      >
+        <div v-if="imageUrl" class="avatar-container">
+          <custom-image :url="imageUrl" @load="load(imageUrl)" />
+        </div>
+        <div v-else class="content-container">
+          <i class="el-icon-plus"></i>
+        </div>
+      </el-upload>
+    </el-form-item>
+    <el-form-item>
+      <el-button type="primary" :loading="loading" @click="submit">提交</el-button>
+      <el-button @click="reset">重置</el-button>
+    </el-form-item>
+  </el-form>
 </template>
 
 <script>
 import formMixin from '@/mixins/form';
 import uploadMixin from '@/mixins/upload';
+import CustomImage from '@/components/CustomImage/index.vue';
 
 export default {
   name: 'MerchandiseForm',
@@ -107,6 +111,9 @@ export default {
       maxUploadCount: 1,
     };
   },
+  components: {
+    CustomImage,
+  },
   watch: {
     id() {
       this.init();
@@ -163,46 +170,29 @@ export default {
 
 <style lang="scss" scoped>
   .upload-container {
-    position: relative;
-    width: 180px;
-    height: 180px;
-    border: 1px dashed #d9d9d9;
-    border-radius: 6px;
-    font-size: 26px;
-    color: #8c939d;
-    line-height: 180px;
-    text-align: center;
-    cursor: pointer;
-    overflow: hidden;
-    background-color: #fbfdff;
+    display: flex;
+      .content-container {
+      position: relative;
+      width: 160px;
+      height: 160px;
+      border: 1px dashed #d9d9d9;
+      border-radius: 6px;
+      font-size: 26px;
+      color: #8c939d;
+      line-height: 160px;
+      text-align: center;
+      cursor: pointer;
+      overflow: hidden;
+      background-color: #fbfdff;
 
-    &:hover {
-      border-color: #409EFF;
-      color: #409eff;
+      &:hover {
+        border-color: #409EFF;
+        color: #409eff;
+      }
     }
-  }
-
-  .avatar {
-    width: 180px;
-    height: 180px;
-    border-radius: 6px;
-  }
-</style>
-
-<style lang="scss" scoped>
-  @media screen and (max-width: $dividingLine) {
-    .upload-container {
-      width: px2rem(148);
-      height: px2rem(148);
-      border-radius: px2rem(6);
-      font-size: px2rem(28);
-      line-height: px2rem(148);
-    }
-
-    .avatar {
-      width: px2rem(148);
-      height: px2rem(148);
-      border-radius: px2rem(6);
+    .avatar-container {
+      width: 160px;
+      height: 160px;
     }
   }
 </style>

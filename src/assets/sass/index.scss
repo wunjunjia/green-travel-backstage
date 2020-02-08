@@ -1,0 +1,62 @@
+@import './var.scss';
+@import './mixin.scss';
+@import './function.scss';
+@import './adapter.scss';
+@import './transition.scss';
+@import './layout.scss';
+@import url('http://at.alicdn.com/t/font_1623824_rdto7ha3a4m.css');
+
+html {
+  height: 100%;
+}
+
+body {
+  height: 100%;
+  font-size: 12px;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  font-family: Helvetica Neue, Helvetica, PingFang SC, Hiragino Sans GB, Microsoft YaHei, Arial, sans-serif;
+}
+
+#app {
+  height: 100%;
+}
+
+a:focus,
+a:active {
+  outline: none;
+}
+
+a,
+a:focus,
+a:hover {
+  cursor: pointer;
+  color: inherit;
+  text-decoration: none;
+}
+
+h1, h2, h3, h4, h5 {
+  margin: 0;
+}
+
+label {
+  display: inline-block;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.clearfix {
+  &:after {
+    content: " ";
+    visibility: hidden;
+    display: block;
+    font-size: 0;
+    clear: both;
+    height: 0;
+  }
+}

@@ -2,7 +2,7 @@ import defaultSettings from '@/settings';
 
 const { fixedHeader, sidebarLogo } = defaultSettings;
 
-const state = {
+const initState = {
   fixedHeader,
   sidebarLogo,
 };
@@ -23,7 +23,7 @@ const actions = {
 
 export default {
   namespaced: true,
-  state,
+  state: initState,
   mutations,
   actions,
 };

@@ -28,8 +28,8 @@ export default {
     },
     singleDelete() {
       this.loading = true;
-      axios.post('/api/merchandise/singleDelete', {
-        id: this.id,
+      axios.post('/api/merchandise/delete', {
+        ids: [this.id],
       }, {
         headers: {
           'Content-Type': 'application/json;charset=UTF-8',

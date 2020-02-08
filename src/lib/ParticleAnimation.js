@@ -1,13 +1,4 @@
-function throttle(fn, delay = 300) {
-  let timer = null;
-  return () => {
-    clearTimeout(timer);
-    timer = setTimeout(() => {
-      clearTimeout(timer);
-      fn();
-    }, delay);
-  };
-}
+import { throttle } from '@/utils/common';
 
 class Particle {
   constructor({

@@ -27,7 +27,7 @@
 import { mapState } from 'vuex';
 import Logo from './Logo.vue';
 import SidebarItem from './SidebarItem.vue';
-import variables from '@/assets/scss/var.scss';
+import variables from '@/assets/sass/var.scss';
 import routes from '@/config/router-config';
 import { filterRoutes } from '@/utils/router';
 

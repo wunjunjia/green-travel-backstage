@@ -18,14 +18,6 @@ const routes = [
         component: () => import('@/views/dashboard/index.vue'),
         meta: { title: 'Dashboard' },
       },
-      {
-        path: 'analysis',
-        name: 'Analysis',
-        hidden: true,
-        component: () => import('@/views/analysis/index.vue'),
-        icon: 's-tools',
-        meta: { title: 'Analysis' },
-      },
     ],
   },
   {
@@ -59,8 +51,14 @@ const routes = [
       {
         path: 'add',
         name: '新增广告',
-        component: () => import('@/views/advertisement/add.vue'),
+        component: () => import('@/views/advertisement/upload.vue'),
         meta: { title: '新增广告' },
+      },
+      {
+        path: 'list',
+        name: '广告列表',
+        component: () => import('@/views/advertisement/list.vue'),
+        meta: { title: '广告列表' },
       },
     ],
   },

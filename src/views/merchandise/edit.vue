@@ -9,7 +9,7 @@
         :id="target.id"
         :name="target.name"
         :description="target.description"
-        :integral="String(target.integral)"
+        :integral="`${target.integral}`"
         :path="target.path"
         @submit="submit"
       />
@@ -21,6 +21,7 @@
 import axios from 'axios';
 import MerchandiseForm from './form.vue';
 import CustomMask from '@/components/CustomMask/index.vue';
+import { equal } from '@/utils/common';
 
 export default {
   name: 'MerchandiseEdit',
@@ -29,10 +30,6 @@ export default {
       type: Object,
       default: () => ({}),
     },
-    close: {
-      type: Function,
-      default: () => {},
-    },
   },
   components: {
     MerchandiseForm,
@@ -40,8 +37,7 @@ export default {
   },
   methods: {
     submit(payload) {
-      const equal = Object.keys(payload).some(key => payload[key] !== this.target[key]);
-      if (!equal) {
+      if (equal(payload, this.target)) {
         this.$refs.form.cancel();
         this.$message.success('提交成功！');
         this.$emit('submit', payload);
@@ -66,6 +62,9 @@ export default {
         this.$refs.form.cancel();
       });
     },
+    close() {
+      this.$emit('close');
+    },
   },
 };
 </script>
@@ -88,6 +87,8 @@ export default {
       top: 10px;
       font-size: 22px;
       color: #606266;
+      line-height: 1;
+      @include expand;
     }
   }
 </style>
@@ -96,14 +97,6 @@ export default {
   @media screen and (max-width: $dividingLine) {
     .merchandise-edit-container {
       width: 90%;
-      padding: px2rem(40) px2rem(10) 0 px2rem(10);
-      border-radius: px2rem(4);
-
-      .icon {
-        right: px2rem(10);
-        top: px2rem(10);
-        font-size: px2rem(22);
-      }
     }
   }
 </style>

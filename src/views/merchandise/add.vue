@@ -1,12 +1,16 @@
 <template>
   <div class="merchandise-add-container">
-    <merchandise-form ref="form" @submit="submit"/>
+    <el-row>
+      <el-col :xs="24" :sm="18" :md="12">
+        <merchandise-form ref="form" @submit="submit"/>
+      </el-col>
+    </el-row>
   </div>
 </template>
 
 <script>
 import axios from 'axios';
-import { getDate } from '@/utils/date';
+import moment from 'moment';
 import MerchandiseForm from './form.vue';
 
 export default {
@@ -27,7 +31,7 @@ export default {
         description,
         integral: parseFloat(integral),
         path,
-        create_time: getDate(),
+        create_time: moment().format('YYYY-MM-DD'),
       }, {
         headers: {
           'Content-Type': 'application/json; charset=UTF-8',
@@ -46,13 +50,6 @@ export default {
 
 <style lang="scss" scoped>
   .merchandise-add-container {
-    box-sizing: border-box;
-    width: 80%;
-    padding: 20px;
-
-    @media screen and (max-width: $dividingLine){
-      width: 100%;
-      padding: px2rem(10);
-    }
+    padding: 10px;
   }
 </style>

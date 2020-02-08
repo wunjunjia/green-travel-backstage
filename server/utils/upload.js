@@ -1,11 +1,11 @@
 const fs = require('fs');
+const moment = require('moment');
 const { baseDir } = require('../config/upload');
-const { getDate } = require('./date'); 
 
 function uploadDirname(fieldname) {
   const LevelOneDir = `${baseDir}/${fieldname}`;
   if (!fs.existsSync(LevelOneDir)) fs.mkdirSync(LevelOneDir);
-  const LevelTwoDir = `${LevelOneDir}/${getDate()}`;
+  const LevelTwoDir = `${LevelOneDir}/${moment().format('YYYY-MM-DD')}`;
   if (!fs.existsSync(LevelTwoDir)) fs.mkdirSync(LevelTwoDir);
   return LevelTwoDir;
 }

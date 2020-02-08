@@ -1,6 +1,6 @@
 import Cookies from 'js-cookie';
 
-const state = {
+const initState = {
   sidebar: {
     opened: Cookies.get('sidebarStatus') ? !!+Cookies.get('sidebarStatus') : true,
     withoutAnimation: false,
@@ -40,7 +40,7 @@ const actions = {
 
 export default {
   namespaced: true,
-  state,
+  state: initState,
   mutations,
   actions,
 };

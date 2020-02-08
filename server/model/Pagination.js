@@ -2,11 +2,9 @@ class Pagination {
   constructor({
     pageSize,
     currentPage,
-    total,
   }) {
-    this.pageSize = parseInt(pageSize);
-    this.currentPage = parseInt(currentPage)
-    this.total = total;
+    this.pageSize = +pageSize;
+    this.currentPage = +currentPage;
   }
 }
 

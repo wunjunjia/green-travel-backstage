@@ -1,10 +1,10 @@
 const Merchandise = require('../model/Merchaindise');
 const Pagination = require('../model/Pagination');
-const MerchandiseService = require('../service/MerchandiseService');
+const merchandiseService = require('../service/MerchandiseService');
 
 class Condition {
   constructor({
-    name,
+    name = '',
   }) {
     this.name = name;
   }
@@ -12,11 +12,9 @@ class Condition {
 
 function save(req, res) {
   const merchandise = new Merchandise(req.body);
-  MerchandiseService
+  merchandiseService
     .save(merchandise)
-    .then(() => {
-      res.json({ code: 0 });
-    })
+    .then(() => res.json({ code: 0 }))
     .catch((e) => {
       console.log(e);
       res.json({ code: 1 });
@@ -26,38 +24,23 @@ function save(req, res) {
 function list(req, res) {
   const pagination = new Pagination(req.query);
   const condition = new Condition(req.query);
-  MerchandiseService
+  merchandiseService
     .list({
       pagination,
       condition,
     })
-    .then((result) => {
-      res.json({ code: 0, data: result });
-    })
+    .then(result => res.json({ code: 0, data: result }))
     .catch((e) => {
       console.log(e);
       res.json({ code: 1 });
     });
 }
 
-function singleDelete(req, res) {
-  const { id } = req.body;
-  MerchandiseService
-    .singleDelete(id)
-    .then((result) => {
-      // console.log(result.affectedRows);
-      res.json({ code: 0 });
-    })
-    .catch((e) => {
-      console.log(e);
-      res.json({ code: 1 });
-    });
-}
-
-function batchDelete(req, res) {
+// console.log(result.affectedRows);
+function remove(req, res) {
   const { ids } = req.body;
-  MerchandiseService
-    .batchDelete(ids)
+  merchandiseService
+    .remove(ids)
     .then(() => res.json({ code: 0 }))
     .catch((e) => {
       console.log(e);
@@ -67,7 +50,7 @@ function batchDelete(req, res) {
 
 function edit(req, res) {
   const merchandise = new Merchandise(req.body);
-  MerchandiseService
+  merchandiseService
     .edit(merchandise)
     .then(() => res.json({ code: 0 }))
     .catch((e) => {
@@ -78,9 +61,9 @@ function edit(req, res) {
 
 function total(req, res) {
   const condition = new Condition(req.query);
-  MerchandiseService
+  merchandiseService
     .total(condition)
-    .then((result) => res.json({ code: 0, data: result }))
+    .then(result => res.json({ code: 0, data: result }))
     .catch((e) => {
       console.log(e);
       res.json({ code: 1 });
@@ -90,8 +73,7 @@ function total(req, res) {
 module.exports = {
   save,
   list,
-  singleDelete,
   edit,
   total,
-  batchDelete,
+  remove,
 };

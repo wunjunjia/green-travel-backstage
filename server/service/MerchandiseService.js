@@ -13,7 +13,7 @@ function save(merchandise) {
   ]);
 }
 
-function list({pagination, condition}) {
+function list({ pagination, condition }) {
   const { currentPage, pageSize } = pagination;
   const { name } = condition;
   return query(`select * from merchandise where exist = 0 and name like ${mysql.escape(`%${name}%`)} limit ?,?`, [
@@ -30,12 +30,7 @@ function list({pagination, condition}) {
     .catch(e => Promise.reject(e));
 }
 
-function singleDelete(id) {
-  // return query('delete from merchandise where id = ?', [id]);
-  return query('update merchandise set exist = 1 where id = ?', [id]);
-}
-
-function batchDelete(ids) {
+function remove(ids) {
   const sql = `update merchandise set exist = 1 where id in (${ids.map(() => '?').join(',')})`;
   return query(sql, ids);
 }
@@ -53,17 +48,14 @@ function edit(merchandise) {
 function total(condition) {
   const { name } = condition;
   return query(`select count(1) as total from merchandise where exist = 0 and name like ${mysql.escape(`%${name}%`)}`)
-    .then((result) => {
-      return result[0].total;
-    })
+    .then((result) => result[0].total)
     .catch(e => Promise.reject(e));
 }
 
 module.exports = {
   save,
   list,
-  singleDelete,
   edit,
   total,
-  batchDelete,
+  remove,
 };

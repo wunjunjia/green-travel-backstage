@@ -11,12 +11,6 @@
         @input="input"
         ></el-input>
     </el-form-item>
-    <!-- <el-form-item>
-      <el-button
-        type="primary"
-        size="medium"
-        @click="submit">查询</el-button>
-    </el-form-item> -->
   </el-form>
 </template>
 
@@ -50,7 +44,7 @@ export default {
 
 <style lang="scss" scoped>
   .el-form-item {
-    margin-top: px2rem(4);
-    margin-bottom: px2rem(4);
+    margin-top: 4px;
+    margin-bottom: 4px;
   }
 </style>

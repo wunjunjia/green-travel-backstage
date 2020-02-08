@@ -2,7 +2,7 @@ import axios from 'axios';
 import router from '@/router';
 import { SAVE, CLEAR } from './mutation-types';
 
-const state = {
+const initState = {
   data: null,
 };
 
@@ -30,7 +30,7 @@ const mutations = {
 
 export default {
   namespaced: true,
-  state,
+  state: initState,
   mutations,
   actions,
 };

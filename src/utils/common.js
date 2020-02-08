@@ -25,4 +25,17 @@ export function throttle(fn, delay = 300) {
   };
 }
 
+export function equal(a, b) {
+  return Object.keys(a).every(key => a[key] === b[key]);
+}
+
+export function unique(arr) {
+  const obj = {};
+  return arr.filter((item) => {
+    if (obj.hasOwnProperty(typeof item + item)) return false;
+    obj[typeof item + item] = true;
+    return true;
+  });
+}
+
 export default {};

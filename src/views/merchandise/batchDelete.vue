@@ -37,7 +37,7 @@ export default {
     },
     batchDelete() {
       this.loading = true;
-      axios.post('/api/merchandise/batchDelete', {
+      axios.post('/api/merchandise/delete', {
         ids: this.ids,
       }, {
         headers: {

@@ -5,7 +5,7 @@ import 'normalize.css';
 import App from './App.vue';
 import router from './router';
 import store from './store';
-import '@/assets/scss/index.scss';
+import '@/assets/sass/index.scss';
 // import '@/assets/font/iconfont.css';
 import './config/axios-config';
 import './permission';

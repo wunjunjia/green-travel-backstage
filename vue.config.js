@@ -8,7 +8,7 @@ module.exports = {
   css: {
     loaderOptions: {
       scss: {
-        prependData: '@import "~@/assets/scss/index.scss";',
+        prependData: '@import "~@/assets/sass/index.scss";',
       },
     },
   },
@@ -20,6 +20,7 @@ module.exports = {
     },
   },
   devServer: {
+    port: 3001,
     proxy: {
       '^/api': {
         target: 'http://localhost:3000',

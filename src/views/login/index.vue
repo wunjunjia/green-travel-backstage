@@ -1,9 +1,9 @@
 <template>
-  <div class="root">
+  <div class="login-container">
     <div class="particle-animation-container">
       <canvas class="particle-animation"></canvas>
     </div>
-    <div class="login-container">
+    <div class="content-container">
       <h1 class="title">亲，您还没登录哟！</h1>
       <a href="/api/login">
         <i class="icon iconfont icon-github1"></i>
@@ -45,7 +45,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  .root {
+  .login-container {
     position: relative;
     width: 100%;
     height: 100%;
@@ -59,7 +59,7 @@ export default {
     z-index: -1;
   }
 
-  .login-container {
+  .content-container {
     position: fixed;
     top: 0;
     left: 0;
@@ -72,13 +72,29 @@ export default {
     text-align: center;
 
     >.title {
-      font-size: px2rem(48);
-      margin-bottom: px2rem(40);
+      font-size: 42px;
+      margin-bottom: 20px;
     }
 
     .icon {
       color: #fff;
-      font-size: px2rem(80);
+      font-size: 80px;
+    }
+  }
+</style>
+
+<style lang="scss" scoped>
+  @media screen and (max-width: $dividingLine) {
+    .login-container {
+      .content-container {
+        .title {
+          font-size: px2rem(32);
+          margin-bottom: px2rem(10);
+        }
+        .icon {
+          font-size: px2rem(64);
+        }
+      }
     }
   }
 </style>

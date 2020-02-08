@@ -37,7 +37,7 @@ router.get('/auth', async (req, res, next) => {
   });
   if (result.status !== 200) return res.send('get user information fail!');
   req.session.user = result.data;
-  const url = process.env.NODE_ENV === 'development' ? 'http://localhost:8080' : '/';
+  const url = process.env.NODE_ENV === 'development' ? 'http://localhost:3001' : '/';
   return res.redirect(url);
 });
 
