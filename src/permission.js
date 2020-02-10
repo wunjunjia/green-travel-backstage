@@ -15,11 +15,11 @@ router.beforeEach(async (to, from, next) => {
   // set page title
   document.title = getPageTitle(to.meta.title);
   // determine whether the user has logged in
-  if (!store.state.user.data) {
+  if (store.state.user.id === -1) {
     const { data: { user } } = await axios.get('/api/user');
     if (user) store.dispatch('user/save', user);
   }
-  if (store.state.user.data) {
+  if (store.state.user.id !== -1) {
     if (to.path === '/login') next({ path: '/' });
     else next();
   } else if (whiteList.indexOf(to.path) !== -1) next();

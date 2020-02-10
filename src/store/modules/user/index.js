@@ -3,7 +3,8 @@ import router from '@/router';
 import { SAVE, CLEAR } from './mutation-types';
 
 const initState = {
-  data: null,
+  id: -1,
+  name: '',
 };
 
 const actions = {
@@ -20,11 +21,13 @@ const actions = {
 };
 
 const mutations = {
-  [SAVE](state, payload) {
-    state.data = payload;
+  [SAVE](state, { id, name }) {
+    state.id = id;
+    state.name = name;
   },
   [CLEAR](state) {
-    state.data = null;
+    state.id = -1;
+    state.name = '';
   },
 };
 

@@ -13,7 +13,6 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
 import { ParticleAnimation } from '@/lib';
 
 export default {
@@ -23,16 +22,7 @@ export default {
       particleAnimation: null,
     };
   },
-  computed: {
-    ...mapState('user', {
-      user: state => state.data,
-    }),
-  },
   mounted() {
-    if (this.user) {
-      this.$router.replace('/');
-      return;
-    }
     this.particleAnimation = new ParticleAnimation({
       el: document.querySelector('.particle-animation'),
       shape: 'heart',

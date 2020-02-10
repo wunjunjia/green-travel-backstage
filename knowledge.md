@@ -14,3 +14,5 @@
     require('@/xxxx')
     url('~@/xxxx')
   ```
+#### 5. express-session的cookie处理一定要主要，静态资源最好放在其前面
+  > 前台请求后台的图片资源时，会携带前台的cookie，这个cookie与后台的cookie是不一致的，那么express-sesion会重新写cookie给前台,那么这样是不对的.解决方法就是把静态资源放在其前面即可
