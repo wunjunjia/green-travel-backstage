@@ -14,5 +14,6 @@
     require('@/xxxx')
     url('~@/xxxx')
   ```
-#### 5. express-session的cookie处理一定要主要，静态资源最好放在其前面
-  > 前台请求后台的图片资源时，会携带前台的cookie，这个cookie与后台的cookie是不一致的，那么express-sesion会重新写cookie给前台,那么这样是不对的.解决方法就是把静态资源放在其前面即可
+#### 5. http://localhost:3000和http://localhost:8000的cookie是供用的，所以无法在一个浏览器中同时操作两个网站。例如后台登录了，那么前台登录的时候会把cookie重写了，这就导致后台刷新的时候是无法获取到session中的user的，那么就需要重新登录。
+#### 6. 获取新插入数据的自增长id
+  > 使用select last_insert_id()时要注意，当一次插入多条记录时，只是获得第一次插入的id值，务必注意

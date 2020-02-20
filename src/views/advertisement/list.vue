@@ -20,7 +20,7 @@
             <el-tag :type="item.status === 0 ? 'danger' : 'success'" size="medium">
               {{ item.status === 0 ? '停用' : '启用' }}
             </el-tag>
-            <span class="date">{{ item.create_time| dateFormatter }}</span>
+            <span class="date">{{ item.create_time | dateFormatter }}</span>
           </div>
         </el-card>
       </li>
@@ -47,6 +47,7 @@
 
 <script>
 import axios from 'axios';
+import moment from 'moment';
 import cache from '@/cache';
 import listMixin from '@/mixins/list';
 import CustomPreview from '@/components/CustomPreview/index.vue';
@@ -83,6 +84,11 @@ export default {
     CustomPagination,
     AdvertisementEdit,
     AdvertisementSearch,
+  },
+  filters: {
+    dateFormatter(value) {
+      return moment(value).format('YYYY-MM-DD');
+    },
   },
   methods: {
     openDialog(id) {
@@ -133,7 +139,6 @@ export default {
 <style lang="scss" scoped>
   .advertisement-list-container {
     padding: 10px;
-    background-color: $appMainBg;
     .empty {
       width: 100%;
       height: 60px;

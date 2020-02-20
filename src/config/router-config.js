@@ -39,6 +39,12 @@ const routes = [
         component: () => import('@/views/merchandise/list.vue'),
         meta: { title: '商品列表' },
       },
+      {
+        path: 'conversion',
+        name: '兑换列表',
+        component: () => import('@/views/conversion/list.vue'),
+        meta: { title: '兑换列表' },
+      },
     ],
   },
   {

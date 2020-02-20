@@ -1,6 +1,9 @@
 <template>
   <el-image
     class="custom-image-container"
+    :style="{
+      borderRadius,
+    }"
     :src="url"
     :fit="fit"
     @load="load">
@@ -22,6 +25,10 @@ export default {
       type: String,
       default: 'cover',
     },
+    borderRadius: {
+      type: String,
+      default: '4px',
+    },
   },
   methods: {
     load() {
@@ -36,7 +43,6 @@ export default {
     display: flex;
     width: 100%;
     height: 100%;
-    border-radius: 4px;
 
     .image-error {
       display: flex;

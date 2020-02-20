@@ -2,6 +2,10 @@
   <div class="advertisement-upload-container">
     <el-form label-width="60px">
       <el-form-item label="图片" required>
+        <!--
+          action="http://localhost:8080/green_travel/api/pictureUtil.action"
+          name="image"
+        -->
         <el-upload
           action="/api/upload/advertisement"
           name="advertisement"
@@ -10,7 +14,7 @@
           :on-success="success"
           :on-error="error"
           :accept="accept"
-          :data="{ operate: 'save' }"
+          :data="{ operate: 'save', name: 'advertisement' }"
           multiple
           drag
         >
@@ -57,7 +61,6 @@ export default {
 <style lang="scss" scoped>
   .advertisement-upload-container {
     padding: 10px;
-    background-color: $appMainBg;
     .list {
       display: flex;
       flex-wrap: wrap;

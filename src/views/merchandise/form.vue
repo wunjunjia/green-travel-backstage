@@ -3,16 +3,26 @@
     :model="formData"
     :rules="rules"
     ref="form"
-    label-width="100px"
+    label-width="80px"
     status-icon
   >
-    <el-form-item label="商品名称" prop="name">
+    <el-form-item label="名称" prop="name">
       <el-input v-model="formData.name" @blur="trim('name')"></el-input>
     </el-form-item>
     <el-form-item label="碳积分" prop="integral" @blur="trim('integral')">
       <el-input v-model="formData.integral"></el-input>
     </el-form-item>
-    <el-form-item label="商品描述" prop="description">
+    <el-form-item label="库存" prop="stock" @blur="trim('stock')">
+      <el-input v-model="formData.stock"></el-input>
+    </el-form-item>
+    <el-form-item label="状态" required>
+      <el-switch
+        v-model="formData.status"
+        active-color="#13ce66"
+        inactive-color="#ff4949">
+      </el-switch>
+    </el-form-item>
+    <el-form-item label="描述" prop="description">
       <el-input
         type="textarea"
         v-model="formData.description"
@@ -24,10 +34,16 @@
         @blur="trim('description')"
       ></el-input>
     </el-form-item>
+    <!--
+      action="http://localhost:8080/green_travel/api/pictureUtil.action"
+      name="image"
+      :data="{ name: 'merchandise' }"
+    -->
     <el-form-item label="图片" required>
       <el-upload
         action="/api/upload/merchandise"
         name="merchandise"
+        :data="{ name: 'merchandise' }"
         :show-file-list="false"
         :before-upload="beforeUpload"
         :on-success="success"
@@ -71,6 +87,14 @@ export default {
       type: String,
       default: '',
     },
+    stock: {
+      type: String,
+      default: '',
+    },
+    status: {
+      type: Boolean,
+      default: true,
+    },
     description: {
       type: String,
       default: '',
@@ -86,6 +110,8 @@ export default {
         name: '',
         description: '',
         integral: '',
+        stock: '',
+        status: true,
       },
       rules: {
         name: [
@@ -98,6 +124,10 @@ export default {
         integral: [
           { required: true, message: '不能为空' },
           { pattern: /(^[1-9][0-9]{0,4}(\.[0-9]{1,2})?$)|(^0?\.[0-9]{1,2}$)/, message: '不符合要求' },
+        ],
+        stock: [
+          { required: true, message: '不能为空' },
+          { pattern: /^(0|[1-9][0-9]{0,4})$/, message: '不符合要求' },
         ],
         description: [
           {
@@ -130,12 +160,15 @@ export default {
   methods: {
     init() {
       if (this.id === -1) {
+        this.formData.status = true;
         this.fileList = [{ imageUrl: '', path: '' }];
         return;
       }
       this.formData.name = this.name;
       this.formData.description = this.description;
       this.formData.integral = this.integral;
+      this.formData.status = this.status;
+      this.formData.stock = this.stock;
       this.fileList = [{
         path: this.path,
         imageUrl: this.path,
@@ -150,11 +183,13 @@ export default {
         return;
       }
       this.$refs.form.validate((valid) => {
-        if (!valid) return;
+        if (!valid || this.loading) return;
         this.loading = true;
         this.$emit('submit', {
           name: this.formData.name,
           description: this.formData.description,
+          status: this.formData.status ? 1 : 0,
+          stock: parseInt(this.formData.stock, 10),
           integral: parseFloat(this.formData.integral),
           path: this.fileList[0].path,
         });
@@ -172,23 +207,23 @@ export default {
   .upload-container {
     display: flex;
       .content-container {
-      position: relative;
-      width: 160px;
-      height: 160px;
-      border: 1px dashed #d9d9d9;
-      border-radius: 6px;
-      font-size: 26px;
-      color: #8c939d;
-      line-height: 160px;
-      text-align: center;
-      cursor: pointer;
-      overflow: hidden;
-      background-color: #fbfdff;
+        position: relative;
+        width: 160px;
+        height: 160px;
+        border: 1px dashed #d9d9d9;
+        border-radius: 6px;
+        font-size: 26px;
+        color: #8c939d;
+        line-height: 160px;
+        text-align: center;
+        cursor: pointer;
+        overflow: hidden;
+        background-color: #fbfdff;
 
-      &:hover {
-        border-color: #409EFF;
-        color: #409eff;
-      }
+        &:hover {
+          border-color: #409EFF;
+          color: #409eff;
+        }
     }
     .avatar-container {
       width: 160px;

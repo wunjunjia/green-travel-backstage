@@ -5,10 +5,13 @@
       @load="load">
     </custom-image>
     <div class="operation-container">
+      <span v-if="detail" class="icon" @click="detailHandler">
+        <i class="el-icon-document"></i>
+      </span>
       <span v-if="edit" class="icon mg-r" @click="editHandler">
         <i class="el-icon-edit"></i>
       </span>
-      <span class="icon" @click="toggle">
+      <span v-if="search" class="icon" @click="toggle">
         <i class="el-icon-zoom-in"></i>
       </span>
       <span v-if="remove" class="icon mg-l" @click="removeHandler">
@@ -19,7 +22,7 @@
       </span>
     </div>
     <transition name="fade">
-      <custom-mask v-show="preview">
+      <custom-mask v-show="preview" @click="toggle">
         <div class="mask-content-container">
           <span class="icon" @click="toggle">
             <i class="el-icon-close"></i>
@@ -47,11 +50,19 @@ export default {
       type: String,
       default: '',
     },
+    search: {
+      type: Boolean,
+      default: true,
+    },
     edit: {
       type: Boolean,
       default: false,
     },
     remove: {
+      type: Boolean,
+      default: false,
+    },
+    detail: {
       type: Boolean,
       default: false,
     },
@@ -78,6 +89,9 @@ export default {
     },
     removeHandler() {
       this.$emit('remove');
+    },
+    detailHandler() {
+      this.$emit('detail');
     },
     linkHandler(e) {
       paste(this.link, e);

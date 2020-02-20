@@ -36,6 +36,7 @@ export default {
       this.$emit('open-dialog', this.batchDelete);
     },
     batchDelete() {
+      if (this.loading) return;
       this.loading = true;
       axios.post('/api/merchandise/delete', {
         ids: this.ids,

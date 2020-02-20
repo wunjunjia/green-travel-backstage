@@ -8,6 +8,9 @@
       <a href="/api/login">
         <i class="icon iconfont icon-github1"></i>
       </a>
+      <!-- <a href="http://localhost:8080/green_travel/api/githubLogin.action">
+        <i class="icon iconfont icon-github1"></i>
+      </a> -->
     </div>
   </div>
 </template>

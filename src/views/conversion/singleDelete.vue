@@ -10,7 +10,7 @@
 import axios from 'axios';
 
 export default {
-  name: 'MerchandiseSingleDelete',
+  name: 'ConversionSingleDelete',
   props: {
     id: {
       type: Number,
@@ -29,7 +29,7 @@ export default {
     singleDelete() {
       if (this.loading) return;
       this.loading = true;
-      axios.post('/api/merchandise/delete', {
+      axios.post('/api/conversion/delete', {
         ids: [this.id],
       }, {
         headers: {

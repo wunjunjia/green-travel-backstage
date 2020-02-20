@@ -23,7 +23,7 @@
           </el-form>
         </template>
       </el-table-column>
-      <el-table-column label="名称" prop="name">
+      <el-table-column label="名称" prop="name" min-width="100px">
         <template slot-scope="scope">
           <div class="multipart-line">{{ scope.row.name }}</div>
         </template>
@@ -35,14 +35,29 @@
       >
       </el-table-column>
       <el-table-column
-        prop="create_time"
-        label="日期"
-        :formatter="dateFormatter"
+        prop="stock"
+        label="库存"
       >
       </el-table-column>
       <el-table-column
+        label="状态"
+      >
+        <template slot-scope="scope">
+          <el-tag :type="scope.row.status === 0 ? 'danger' : 'success'" size="medium">
+            {{ scope.row.status === 0 ? '已下架' : '已上架' }}
+          </el-tag>
+        </template>
+      </el-table-column>
+      <!-- <el-table-column
+        prop="create_time"
+        label="日期"
+        :formatter="dateFormatter"
+      > -->
+      <!-- </el-table-column> -->
+      <el-table-column
         prop="description"
         label="描述"
+        min-width="300px"
       >
         <template slot-scope="scope">
           <div class="multipart-line">{{ scope.row.description }}</div>
@@ -62,7 +77,7 @@
             size="medium"
             @click="openEdit(scope.row)">编辑</el-button>
           <merchandise-single-delete
-            :id="list[scope.$index].id"
+            :id="scope.row.id"
             @open-dialog="openDialog"
             @single-delete="singleDelete"
           />
@@ -85,7 +100,7 @@
     <custom-dialog
       :visible="dialog"
       @close="closeDialog"
-      @determine="handler"/>
+      @determine="handler" />
   </div>
 </template>
 
@@ -150,10 +165,20 @@ export default {
       this.dialog = true;
     },
     submit(payload) {
-      this.target.name = payload.name;
-      this.target.description = payload.description;
-      this.target.integral = payload.integral;
-      this.target.path = payload.path;
+      const {
+        name,
+        description,
+        integral,
+        status,
+        path,
+        stock,
+      } = payload;
+      this.target.name = name;
+      this.target.description = description;
+      this.target.integral = integral;
+      this.target.status = status;
+      this.target.stock = stock;
+      this.target.path = path;
       this.closeEdit();
     },
     select(selection) {
@@ -178,7 +203,6 @@ export default {
 <style lang="scss" scoped>
   .merchandise-list-container {
     padding: 10px;
-    background-color: $appMainBg;
     .multipart-line {
       width: 100%;
       overflow: hidden;

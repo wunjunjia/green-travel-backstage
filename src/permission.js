@@ -17,6 +17,9 @@ router.beforeEach(async (to, from, next) => {
   // determine whether the user has logged in
   if (store.state.user.id === -1) {
     const { data: { user } } = await axios.get('/api/user');
+    // const { data: { code, user } } = await axios.get('http://localhost:8080/green_travel/api/LoginUser.action', {
+    // withCredentials: true,
+    // });
     if (user) store.dispatch('user/save', user);
   }
   if (store.state.user.id !== -1) {

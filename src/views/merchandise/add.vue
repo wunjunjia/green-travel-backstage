@@ -25,11 +25,15 @@ export default {
         description,
         integral,
         path,
+        status,
+        stock,
       } = payload;
       axios.post('/api/merchandise/save', {
         name,
         description,
         integral: parseFloat(integral),
+        status,
+        stock,
         path,
         create_time: moment().format('YYYY-MM-DD'),
       }, {

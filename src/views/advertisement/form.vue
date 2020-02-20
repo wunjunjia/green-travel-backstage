@@ -34,13 +34,13 @@
         @blur="trim('outside_link')"
       ></el-input>
     </el-form-item>
-      <el-form-item label="状态" required>
-        <el-switch
-          v-model="formData.status"
-          active-color="#13ce66"
-          inactive-color="#ff4949">
-        </el-switch>
-      </el-form-item>
+    <el-form-item label="状态" required>
+      <el-switch
+        v-model="formData.status"
+        active-color="#13ce66"
+        inactive-color="#ff4949">
+      </el-switch>
+    </el-form-item>
     <el-form-item>
       <el-button type="primary" :loading="loading" @click="submit">提交</el-button>
       <el-button @click="reset">重置</el-button>
@@ -128,7 +128,7 @@ export default {
         return;
       }
       this.$refs.form.validate((valid) => {
-        if (!valid) return;
+        if (!valid || this.loading) return;
         this.loading = true;
         this.$emit('submit', {
           status: this.formData.status ? 1 : 0,
@@ -148,22 +148,10 @@ export default {
   .upload-container {
     display: flex;
     .avatar-container {
-      width: 350px;
-      height: 130px;
+      width: 100%;
     }
   }
   .el-form-item {
     margin-bottom: 10px;
-  }
-</style>
-
-<style lang="scss" scoped>
-  @media screen and (max-width: $dividingLine) {
-    .upload-container {
-      .avatar-container {
-        width: 100%;
-        height: auto;
-      }
-    }
   }
 </style>

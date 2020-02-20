@@ -10,6 +10,8 @@
         :name="target.name"
         :description="target.description"
         :integral="`${target.integral}`"
+        :status="!!target.status"
+        :stock="`${target.stock}`"
         :path="target.path"
         @submit="submit"
       />

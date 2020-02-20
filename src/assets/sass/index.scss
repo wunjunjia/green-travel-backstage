@@ -4,7 +4,7 @@
 @import './adapter.scss';
 @import './transition.scss';
 @import './layout.scss';
-@import url('http://at.alicdn.com/t/font_1623824_rdto7ha3a4m.css');
+@import url('http://at.alicdn.com/t/font_1623824_0kgrgubpcpa9.css');
 
 html {
   height: 100%;
@@ -13,6 +13,7 @@ html {
 body {
   height: 100%;
   font-size: 12px;
+  background-color: $appMainBg;
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
@@ -48,6 +49,10 @@ ul {
   margin: 0;
   padding: 0;
   list-style: none;
+}
+
+p {
+  margin: 0;
 }
 
 .clearfix {

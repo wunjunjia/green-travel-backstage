@@ -1,5 +1,5 @@
 <template>
-  <div class="mask-container">
+  <div class="mask-container" @click.self="handle">
     <slot />
   </div>
 </template>
@@ -7,6 +7,11 @@
 <script>
 export default {
   name: 'CustomMask',
+  methods: {
+    handle() {
+      this.$emit('click');
+    },
+  },
 };
 </script>
 

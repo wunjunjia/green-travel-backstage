@@ -1,4 +1,3 @@
-import moment from 'moment';
 import axios from 'axios';
 import cache from '@/cache';
 
@@ -20,15 +19,7 @@ export default {
       return Math.ceil(this.total / this.pageSize);
     },
   },
-  filters: {
-    dateFormatter(value) {
-      return moment(value).format('YYYY-MM-DD');
-    },
-  },
   methods: {
-    dateFormatter(row) {
-      return moment(row.create_time).format('YYYY-MM-DD');
-    },
     getTotal() {
       axios.get(this.url.total, {
         params: this.condition,

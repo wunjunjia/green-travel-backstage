@@ -55,11 +55,11 @@ export default {
         value: -1,
         label: '全部',
       }, {
-        value: 0,
-        label: '停用',
-      }, {
         value: 1,
         label: '启用',
+      }, {
+        value: 0,
+        label: '停用',
       }],
     };
   },
