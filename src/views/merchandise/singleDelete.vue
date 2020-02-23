@@ -3,6 +3,7 @@
     type="danger"
     size="medium"
     :loading="loading"
+    :disabled="loading"
     @click="openDialog">删除</el-button>
 </template>
 
@@ -27,14 +28,10 @@ export default {
       this.$emit('open-dialog', this.singleDelete);
     },
     singleDelete() {
-      if (this.loading) return;
+      if (this.loading) return Promise.resolve();
       this.loading = true;
-      axios.post('/api/merchandise/delete', {
+      return axios.post('/api/merchandise/delete', {
         ids: [this.id],
-      }, {
-        headers: {
-          'Content-Type': 'application/json;charset=UTF-8',
-        },
       }).then((result) => {
         if (result.data.code !== 0) {
           this.$message.error('删除失败！');

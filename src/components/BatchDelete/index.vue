@@ -3,7 +3,6 @@
     <el-button
       type="danger"
       size="medium"
-      :loading="loading"
       :disabled="disabled"
       @click="openDialog"
     >批量删除</el-button>
@@ -27,21 +26,13 @@ export default {
       default: () => {},
     },
   },
-  data() {
-    return {
-      loading: false,
-    };
-  },
   methods: {
     openDialog() {
       if (this.ids.length === 0) return;
       this.$emit('open-dialog', this.delete);
     },
-    async delete() {
-      if (this.loading) return;
-      this.loading = true;
-      await this.batchDelete();
-      this.loading = false;
+    delete() {
+      this.batchDelete();
     },
   },
 };

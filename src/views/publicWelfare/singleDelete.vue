@@ -2,7 +2,7 @@
   <el-button
     type="danger"
     size="medium"
-    :loading="loading"
+    :disabled="disabled"
     @click="openDialog">删除</el-button>
 </template>
 
@@ -10,31 +10,24 @@
 import axios from 'axios';
 
 export default {
-  name: 'ConversionSingleDelete',
+  name: 'PublicWelfareSingleDelete',
   props: {
     id: {
       type: Number,
       required: true,
     },
-  },
-  data() {
-    return {
-      loading: false,
-    };
+    disabled: {
+      type: Boolean,
+      default: false,
+    },
   },
   methods: {
     openDialog() {
       this.$emit('open-dialog', this.singleDelete);
     },
     singleDelete() {
-      if (this.loading) return Promise.resolve();
-      this.loading = true;
-      return axios.post('/api/conversion/delete', {
+      return axios.post('/api/publicWelfare/delete', {
         ids: [this.id],
-      }, {
-        headers: {
-          'Content-Type': 'application/json;charset=UTF-8',
-        },
       }).then((result) => {
         if (result.data.code !== 0) {
           this.$message.error('删除失败！');
@@ -42,8 +35,6 @@ export default {
         }
         this.$message.success('删除成功！');
         this.$emit('single-delete');
-      }).finally(() => {
-        this.loading = false;
       });
     },
   },

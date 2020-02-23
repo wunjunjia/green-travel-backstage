@@ -177,29 +177,29 @@ export default {
 </style>
 
 <style lang="scss" scoped>
-  @media screen and (max-width: $dividingLine) {
-    .advertisement-list-container {
-      .list {
-        .card-container {
+@media screen and (max-width: $dividingLine) {
+  .advertisement-list-container {
+    .list {
+      .card-container {
+        width: 100%;
+        margin-right: 0;
+        .avatar-container {
           width: 100%;
-          margin-right: 0;
-          .avatar-container {
-            width: 100%;
-            height: auto;
-          }
+          height: auto;
         }
       }
     }
   }
+}
 </style>
 
 <style lang="scss">
-  .advertisement-list-container {
-    .mask-content-container {
-      width: 700px;
-      @media screen and (max-width: $dividingLine) {
-        width: 90%;
-      }
+.advertisement-list-container {
+  .mask-content-container {
+    width: 700px;
+    @media screen and (max-width: $dividingLine) {
+      width: 90%;
     }
   }
+}
 </style>

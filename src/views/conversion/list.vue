@@ -2,12 +2,11 @@
   <div class="conversion-list-container">
     <div class="header">
       <conversion-search @submit="search"/>
-      <batch-delete
-        :ids="ids"
-        :disabled="list.length === 0"
-        :batchDelete="batchDelete"
-        @open-dialog="openDialog"
-      />
+      <el-button
+        type="danger"
+        size="medium"
+        :disabled="disabled || list.length === 0"
+        @click="openDialog(batchDelete)">批量删除</el-button>
     </div>
     <el-table
       :data="list"
@@ -21,7 +20,7 @@
       <el-table-column
         label="日期"
         prop="create_time"
-        :formatter="dateFormatter"
+        :formatter="row => dateFormatter(row.create_time)"
         width="200px"></el-table-column>
       <el-table-column label="商品图片">
         <template slot-scope="scope">
@@ -65,12 +64,10 @@
 </template>
 
 <script>
-import moment from 'moment';
 import axios from 'axios';
 import CustomPreview from '@/components/CustomPreview/index.vue';
 import CustomPagination from '@/components/CustomPagination/index.vue';
 import CustomDialog from '@/components/CustomDialog/index.vue';
-import BatchDelete from '@/components/BatchDelete/index.vue';
 import cache from '@/cache';
 import listMixin from '@/mixins/list';
 import ConversionSearch from './search.vue';
@@ -101,44 +98,21 @@ export default {
     CustomPagination,
     CustomDialog,
     ConversionSearch,
-    BatchDelete,
     ConversionSingleDelete,
     MerchandiseDetail,
   },
   methods: {
-    dateFormatter(row) {
-      return moment(row.create_time).format('YYYY-MM-DD HH:mm:ss');
-    },
-    select(selection) {
-      this.ids = selection.map(item => item.id);
-    },
     search(payload) {
       const { name } = payload;
       this.condition.name = name;
       this.currentPage = 1;
-      cache.set('conversion', {});
+      cache.set(this.character, {});
       this.getData();
       this.getTotal();
-    },
-    openDialog(handler) {
-      this.handler = () => {
-        this.closeDialog();
-        handler();
-      };
-      this.dialog = true;
-    },
-    singleDelete() {
-      if (this.currentPage !== 1 && this.currentPage === this.pageCount && this.list.length === 1) this.currentPage -= 1;
-      this.total -= 1;
-      this.core();
     },
     batchDelete() {
       return axios.post('/api/conversion/delete', {
         ids: this.ids,
-      }, {
-        headers: {
-          'Content-Type': 'application/json; charset=UTF-8',
-        },
       })
         .then((result) => {
           const { code } = result.data;

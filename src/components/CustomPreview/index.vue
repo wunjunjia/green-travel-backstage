@@ -145,7 +145,8 @@ export default {
       position: absolute;
       top: 50%;
       left: 50%;
-      padding: 40px 20px 20px 20px;
+      padding: 40px 10px 10px 10px;
+      padding-top: 40px;
       background-color: #fff;
       transform: translate(-50%, -50%);
       border-radius: 6px;
@@ -153,7 +154,7 @@ export default {
       .icon {
         position: absolute;
         top: 10px;
-        right: 20px;
+        right: 10px;
         color: #909399;
         font-size: 22px;
       }

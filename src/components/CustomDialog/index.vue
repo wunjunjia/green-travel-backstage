@@ -4,7 +4,7 @@
     :show-close="false"
     width="320px"
     center>
-    <p class="dialog-title">确定删除?</p>
+    <p class="dialog-title" style="margin: 0; color: #333; font-size: 16px; text-align: center;">{{ title }}</p>
     <span slot="footer">
       <el-button type="primary" @click="close">取消</el-button>
       <el-button type="danger" @click="determine">确定</el-button>
@@ -20,6 +20,10 @@ export default {
       type: Boolean,
       default: false,
     },
+    title: {
+      type: String,
+      default: '确定删除？',
+    },
   },
   methods: {
     close() {
@@ -31,12 +35,3 @@ export default {
   },
 };
 </script>
-
-<style lang="scss" scoped>
-  .dialog-title {
-    margin: 0;
-    color: #333;
-    font-size: 16px;
-    text-align: center;
-  }
-</style>

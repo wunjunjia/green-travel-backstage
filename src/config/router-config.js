@@ -68,6 +68,21 @@ const routes = [
       },
     ],
   },
+  {
+    path: '/publicWelfare',
+    name: '公益管理',
+    icon: 'icon-gongyizhongxin',
+    component: Layout,
+    redirect: '/publicWelfare/list',
+    children: [
+      {
+        path: 'list',
+        name: '公益列表',
+        component: () => import('@/views/publicWelfare/list.vue'),
+        meta: { title: '公益列表' },
+      },
+    ],
+  },
 ];
 
 export default routes;

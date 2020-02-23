@@ -10,7 +10,7 @@ export function debounce(fn, delay = 300) {
     const timer = setTimeout(() => {
       clearTimeout(timer);
       flag = false;
-      fn(args);
+      fn(...args);
     }, delay);
   };
 }
@@ -20,7 +20,7 @@ export function throttle(fn, delay = 300) {
   return (...args) => {
     clearTimeout(timer);
     timer = setTimeout(() => {
-      fn(args);
+      fn(...args);
     }, delay);
   };
 }

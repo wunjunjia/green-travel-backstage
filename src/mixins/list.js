@@ -1,10 +1,12 @@
 import axios from 'axios';
+import moment from 'moment';
 import cache from '@/cache';
 
 export default {
   data() {
     return {
       loading: false,
+      disabled: false,
       edit: false,
       dialog: false,
       target: {},
@@ -20,6 +22,15 @@ export default {
     },
   },
   methods: {
+    select(selection) {
+      this.ids = selection.map(item => item.id);
+    },
+    integralFormatter(value) {
+      return parseFloat(value).toFixed(2);
+    },
+    dateFormatter(value) {
+      return moment(value).format('YYYY-MM-DD HH:mm');
+    },
     getTotal() {
       axios.get(this.url.total, {
         params: this.condition,
@@ -59,6 +70,15 @@ export default {
         this.loading = false;
       });
     },
+    openDialog(handler) {
+      this.handler = async () => {
+        this.closeDialog();
+        this.disabled = true;
+        await handler();
+        this.disabled = false;
+      };
+      this.dialog = true;
+    },
     closeDialog() {
       this.dialog = false;
     },
@@ -68,6 +88,11 @@ export default {
     },
     closeEdit() {
       this.edit = false;
+    },
+    singleDelete() {
+      if (this.currentPage !== 1 && this.currentPage === this.pageCount && this.list.length === 1) this.currentPage -= 1;
+      this.total -= 1;
+      this.core();
     },
     core() {
       this.closeDialog();
