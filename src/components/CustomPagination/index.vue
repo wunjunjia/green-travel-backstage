@@ -52,36 +52,29 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.pagination-container {
+  position: fixed;
+  left: #{$openSideBarWidth}px;
+  bottom: 20px;
+  width: calc(100% - #{$openSideBarWidth}px);
+  text-align: center;
+  transition: all .28s;
+  &.hideSidebar {
+    left: #{$collapseSideBarWidth}px;
+    width: calc(100% - #{$collapseSideBarWidth}px);
+  }
+  &.withoutAnimation {
+    transition: none;
+  }
+}
+@media screen and (max-width: $dividingLine) {
   .pagination-container {
-    position: fixed;
-    left: #{$openSideBarWidth}px;
-    bottom: 20px;
-    width: calc(100% - #{$openSideBarWidth}px);
-    text-align: center;
-    transition: all .28s;
-
+    left: 0;
+    width: 100%;
     &.hideSidebar {
-      left: #{$collapseSideBarWidth}px;
-      width: calc(100% - #{$collapseSideBarWidth}px);
-    }
-
-    &.withoutAnimation {
-      transition: none;
-    }
-  }
-</style>
-
-<style lang="scss" scoped>
-  @media screen and (max-width: $dividingLine) {
-    .pagination-container {
       left: 0;
-      bottom: px2rem(20);
       width: 100%;
-
-      &.hideSidebar {
-        left: 0;
-        width: 100%;
-      }
     }
   }
+}
 </style>

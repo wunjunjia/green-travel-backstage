@@ -6,8 +6,8 @@
     <el-breadcrumb class="breadcrumb-container" separator="/">
       <transition-group name="breadcrumb">
         <el-breadcrumb-item v-for="(item, index) in breadcrumbs" :key="item.path">
-          <span v-if="index === breadcrumbs.length-1">{{ item.name }}</span>
-          <router-link v-else :to="item.path">{{ item.name }}</router-link>
+          <span v-if="index === breadcrumbs.length - 1">{{ item.meta.title }}</span>
+          <router-link v-else :to="item.path">{{ item.meta.title }}</router-link>
         </el-breadcrumb-item>
       </transition-group>
     </el-breadcrumb>
@@ -57,8 +57,8 @@ export default {
       this.clear();
     },
     initBreadcrumbs() {
-      this.breadcrumbs = this.$route.matched.filter(item => item.name);
-      if (this.breadcrumbs[0].name !== 'Dashboard') this.breadcrumbs.unshift({ path: '/dashboard', name: 'Dashboard' });
+      this.breadcrumbs = this.$route.matched.filter(item => item.meta.title);
+      if (this.breadcrumbs[0].meta.title !== 'Dashboard') this.breadcrumbs.unshift({ path: '/dashboard', meta: { title: 'Dashboard' } });
     },
     ...mapActions('app', ['toggleSideBar']),
     ...mapActions('user', ['clear']),

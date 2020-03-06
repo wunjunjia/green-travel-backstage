@@ -5,7 +5,7 @@
       <el-button
         type="danger"
         size="medium"
-        :disabled="disabled || list.length === 0"
+        :disabled="disabled || list.length === 0 || ids.length === 0"
         @click="openDialog(batchDelete)">批量删除</el-button>
     </div>
     <el-table

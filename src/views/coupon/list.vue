@@ -1,7 +1,6 @@
 <template>
-  <div class="conversion-list-container">
+  <div class="coupon-list-container">
     <div class="header">
-      <conversion-search @submit="search"/>
       <el-button
         type="danger"
         size="medium"
@@ -14,31 +13,28 @@
       v-loading="loading"
     >
       <el-table-column type="selection"></el-table-column>
-      <el-table-column label="编号" prop="serial_number" width="300px"></el-table-column>
-      <el-table-column label="用户名称" prop="u_name"></el-table-column>
-      <el-table-column label="数量" prop="quantity"></el-table-column>
+      <el-table-column label="积分" prop="integral"></el-table-column>
+      <el-table-column label="天数" prop="day"></el-table-column>
       <el-table-column
-        label="日期"
-        prop="create_time"
-        :formatter="row => dateFormatter(row.create_time)"
-        width="200px"></el-table-column>
-      <el-table-column label="商品图片">
+        prop="description"
+        label="描述"
+        min-width="300px"
+      >
         <template slot-scope="scope">
-          <div class="avatar-container">
-            <custom-preview
-              :path="scope.row.m_path"
-              :search="false"
-              :detail="true"
-              @detail="openDetail(scope.row)"
-            />
-          </div>
+          <div class="multipart-line-3">{{ scope.row.description }}</div>
         </template>
       </el-table-column>
-      <el-table-column label="操作" width="120px">
+      <el-table-column label="操作" width="280px">
         <template slot-scope="scope">
+          <el-button size="medium" type="success" @click="openPreview(scope.row)">预览</el-button>
+          <el-button
+            type="primary"
+            size="medium"
+            :disabled="disabled"
+            @click="openEdit(scope.row)">编辑</el-button>
           <single-delete
             :id="scope.row.id"
-            url="/api/conversion/delete"
+            url="/api/coupon/delete"
             @single-delete="singleDelete"
             @open-dialog="openDialog"
           />
@@ -53,12 +49,20 @@
     <custom-dialog
       :visible="dialog"
       @close="closeDialog"
-      @determine="handler"/>
+      @determine="handler" />
     <transition name="fade">
-      <merchandise-detail
-        v-show="detail"
+      <coupon-edit
+        v-show="edit"
         :target="target"
-        @close="closeDetail"
+        @close="closeEdit"
+        @submit="submit"
+      />
+    </transition>
+    <transition name="fade">
+      <coupon-preview
+        v-show="preview"
+        :target="target"
+        @close="closePreview"
       />
     </transition>
   </div>
@@ -66,53 +70,40 @@
 
 <script>
 import axios from 'axios';
-import CustomPreview from '@/components/CustomPreview/index.vue';
+import listMixin from '@/mixins/list';
 import CustomPagination from '@/components/CustomPagination/index.vue';
 import CustomDialog from '@/components/CustomDialog/index.vue';
 import SingleDelete from '@/components/SingleDelete/index.vue';
-import cache from '@/cache';
-import listMixin from '@/mixins/list';
-import ConversionSearch from './search.vue';
-import MerchandiseDetail from './detail.vue';
+import CouponEdit from './edit.vue';
+import CouponPreview from './preview.vue';
 
 export default {
-  name: 'ConversionList',
+  name: 'CouponList',
   mixins: [listMixin],
   data() {
     return {
-      character: 'conversion',
+      character: 'coupon',
       url: {
-        data: '/api/conversion/list',
-        total: '/api/conversion/total',
+        data: '/api/coupon/list',
+        total: '/api/coupon/total',
       },
-      condition: {
-        name: '',
-      },
+      condition: {},
       currentPage: 1,
       pageSize: 6,
-      detail: false,
+      preview: false,
       handler: () => {},
     };
   },
   components: {
-    CustomPreview,
     CustomPagination,
     CustomDialog,
-    ConversionSearch,
     SingleDelete,
-    MerchandiseDetail,
+    CouponEdit,
+    CouponPreview,
   },
   methods: {
-    search(payload) {
-      const { name } = payload;
-      this.condition.name = name;
-      this.currentPage = 1;
-      cache.set(this.character, {});
-      this.getData();
-      this.getTotal();
-    },
     batchDelete() {
-      return axios.post('/api/conversion/delete', {
+      return axios.post('/api/coupon/delete', {
         ids: this.ids,
       })
         .then((result) => {
@@ -128,41 +119,40 @@ export default {
           this.ids = [];
         });
     },
-    openDetail(target) {
-      this.target = {
-        path: target.m_path,
-        status: target.m_status,
-        stock: target.m_stock,
-        name: target.m_name,
-        integral: target.m_integral,
-        description: target.m_description,
-      };
-      this.detail = true;
+    submit(payload) {
+      const {
+        description,
+        integral,
+        day,
+      } = payload;
+      this.target.description = description;
+      this.target.integral = integral;
+      this.target.day = day;
+      this.closeEdit();
     },
-    closeDetail() {
-      this.detail = false;
+    openPreview(target) {
+      this.target = target;
+      this.preview = true;
     },
-  },
-  beforeDestroy() {
-    const { name } = this.condition;
-    if (name !== '') cache.set(this.character, {});
+    closePreview() {
+      this.preview = false;
+    },
   },
 };
 </script>
 
 <style lang="scss" scoped>
-  .conversion-list-container {
+  .coupon-list-container {
     padding: 10px;
+    .multipart-line-3 {
+      @include multipartLine(3);
+    }
     .header {
       display: flex;
       justify-content: space-between;
       align-items: center;
       flex-wrap: wrap;
       margin-bottom: 10px;
-    }
-    .avatar-container {
-      width: 56px;
-      height: 56px;
     }
   }
 </style>

@@ -5,10 +5,12 @@
         <!--
           action="http://localhost:8080/green_travel/api/pictureUtil.action"
           name="image"
-        -->
-        <el-upload
           action="/api/upload/advertisement"
           name="advertisement"
+        -->
+        <el-upload
+          action="http://localhost:8080/green_travel/api/pictureUtil.action"
+          name="image"
           :show-file-list="false"
           :before-upload="beforeUpload"
           :on-success="success"

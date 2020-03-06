@@ -22,26 +22,29 @@ const routes = [
   },
   {
     path: '/merchandise',
-    name: '商品管理',
+    name: 'merchandise',
     icon: 'icon-shangpingouwudai2',
     component: Layout,
     redirect: '/merchandise/add',
+    meta: {
+      title: '商品管理',
+    },
     children: [
       {
         path: 'add',
-        name: '新增商品',
+        name: 'merchandiseAdd',
         component: () => import('@/views/merchandise/add.vue'),
         meta: { title: '新增商品' },
       },
       {
         path: 'list',
-        name: '商品列表',
+        name: 'merchandiseList',
         component: () => import('@/views/merchandise/list.vue'),
         meta: { title: '商品列表' },
       },
       {
         path: 'conversion',
-        name: '兑换列表',
+        name: 'conversion',
         component: () => import('@/views/conversion/list.vue'),
         meta: { title: '兑换列表' },
       },
@@ -49,20 +52,23 @@ const routes = [
   },
   {
     path: '/advertisement',
-    name: '广告管理',
+    name: 'advertisement',
     icon: 'icon-ico_AD',
     component: Layout,
     redirect: '/advertisement/add',
+    meta: {
+      title: '广告管理',
+    },
     children: [
       {
         path: 'add',
-        name: '新增广告',
+        name: 'advertisementAdd',
         component: () => import('@/views/advertisement/upload.vue'),
         meta: { title: '新增广告' },
       },
       {
         path: 'list',
-        name: '广告列表',
+        name: 'advertisementList',
         component: () => import('@/views/advertisement/list.vue'),
         meta: { title: '广告列表' },
       },
@@ -70,16 +76,61 @@ const routes = [
   },
   {
     path: '/publicWelfare',
-    name: '公益管理',
+    name: 'publicWelfare',
     icon: 'icon-gongyizhongxin',
     component: Layout,
     redirect: '/publicWelfare/list',
+    meta: { title: '公益管理' },
     children: [
       {
         path: 'list',
-        name: '公益列表',
+        name: 'publicWelfareList',
         component: () => import('@/views/publicWelfare/list.vue'),
         meta: { title: '公益列表' },
+      },
+    ],
+  },
+  {
+    path: '/coupon',
+    name: 'coupon',
+    icon: 'icon-f-coupon',
+    component: Layout,
+    redirect: '/coupon/add',
+    meta: { title: '优惠卷管理' },
+    children: [
+      {
+        path: 'add',
+        name: 'couponAdd',
+        component: () => import('@/views/coupon/add.vue'),
+        meta: { title: '新增优惠卷' },
+      },
+      {
+        path: 'list',
+        name: 'couponList',
+        component: () => import('@/views/coupon/list.vue'),
+        meta: { title: '优惠卷列表' },
+      },
+    ],
+  },
+  {
+    path: '/task',
+    name: 'task',
+    icon: 'icon-renwu',
+    component: Layout,
+    redirect: '/task/add',
+    meta: { title: '任务管理' },
+    children: [
+      {
+        path: 'add',
+        name: 'taskAdd',
+        component: () => import('@/views/task/add.vue'),
+        meta: { title: '新增任务' },
+      },
+      {
+        path: 'list',
+        name: 'taskList',
+        component: () => import('@/views/task/list.vue'),
+        meta: { title: '任务列表' },
       },
     ],
   },

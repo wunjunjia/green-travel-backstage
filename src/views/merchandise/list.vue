@@ -5,7 +5,7 @@
       <el-button
         type="danger"
         size="medium"
-        :disabled="disabled || list.length === 0"
+        :disabled="disabled || list.length === 0 || ids.length === 0"
         @click="openDialog(batchDelete)">批量删除</el-button>
     </div>
     <el-table
@@ -68,9 +68,11 @@
           <el-button
             type="primary"
             size="medium"
+            :disabled="disabled"
             @click="openEdit(scope.row)">编辑</el-button>
-          <merchandise-single-delete
+          <single-delete
             :id="scope.row.id"
+            url="/api/merchandise/delete"
             @open-dialog="openDialog"
             @single-delete="singleDelete"
           />
@@ -99,9 +101,9 @@
 
 <script>
 import axios from 'axios';
+import SingleDelete from '@/components/SingleDelete/index.vue';
 import MerchandiseEdit from './edit.vue';
 import MerchandiseSearch from './search.vue';
-import MerchandiseSingleDelete from './singleDelete.vue';
 import CustomPreview from '@/components/CustomPreview/index.vue';
 import CustomPagination from '@/components/CustomPagination/index.vue';
 import CustomDialog from '@/components/CustomDialog/index.vue';
@@ -129,7 +131,7 @@ export default {
   components: {
     MerchandiseEdit,
     MerchandiseSearch,
-    MerchandiseSingleDelete,
+    SingleDelete,
     CustomPreview,
     CustomPagination,
     CustomDialog,

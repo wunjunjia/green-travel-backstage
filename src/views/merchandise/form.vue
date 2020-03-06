@@ -37,7 +37,8 @@
     <!--
       action="http://localhost:8080/green_travel/api/pictureUtil.action"
       name="image"
-      :data="{ name: 'merchandise' }"
+      action="/api/upload/merchandise"
+      name="merchandise"
     -->
     <el-form-item label="图片" required>
       <el-upload
